@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Leandro Taibbi — Hypnotic Techno · Live &amp; DJ · Milan</title>
+<meta name="description" content="Leandro Taibbi — hypnotic techno live act and DJ from Milan. Hybrid live on 6x Allen &amp; Heath Xone:K2 and Ableton with self-built Max for Live instruments. Booking, press kit, releases and live sets.">
+<meta property="og:title" content="Leandro Taibbi — Hypnotic Techno · Live &amp; DJ">
+<meta property="og:description" content="Hybrid live act on 6x Xone:K2, Ableton and self-built Max for Live instruments. Milan. Available for booking worldwide.">
+<meta property="og:type" content="profile">
+<meta name="theme-color" content="#070809">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070809; --panel:#111417; --panel-2:#161a1e; --line:#232a30;
+  --ink:#ecead9; --dim:#8b938d; --dim2:#5a6570;
+  --cv:#e8763c;      /* arancione — stesso accento dell'EPK */
+  --sig:#62b2c0;     /* azzurro segnale */
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:15px;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+body{background-image:
+   radial-gradient(120% 60% at 50% -10%, rgba(232,118,60,.10), transparent 60%),
+   repeating-linear-gradient(0deg, rgba(255,255,255,.015) 0 1px, transparent 1px 3px);
+  min-height:100dvh}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:520px;margin:0 auto;padding:38px 20px 60px}
+
+/* ── header ─────────────────────────────────────── */
+.term{font-size:11px;line-height:1.4;color:var(--cv);white-space:pre;margin:0 0 22px;letter-spacing:.04em;overflow-x:auto}
+.name{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,9vw,2.6rem);line-height:1;letter-spacing:-.02em;margin:0 0 12px}
+.tagline{color:var(--ink);font-size:14px;line-height:1.55;margin:0 0 8px}
+.tagline b{color:var(--cv);font-weight:500}
+.meta{color:var(--dim);font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;margin:0 0 6px}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink);border:1px solid var(--line);background:var(--panel);padding:7px 13px;margin-top:14px}
+.dot{width:7px;height:7px;border-radius:50%;background:#2ee08a;box-shadow:0 0 10px #2ee08a;flex:none;
+  animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* ── sezioni ────────────────────────────────────── */
+.sec{margin-top:38px}
+.sec-h{display:flex;align-items:center;gap:11px;margin-bottom:13px}
+.sec-h .jack{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--sig);flex:none;position:relative}
+.sec-h .jack::after{content:'';position:absolute;inset:2px;border-radius:50%;background:var(--sig);opacity:.85}
+.sec-h span{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--sig)}
+.sec-h .ln{flex:1;height:1px;background:var(--line)}
+
+/* ── link ───────────────────────────────────────── */
+.lnk{display:flex;align-items:center;gap:15px;border:1px solid var(--line);background:var(--panel);
+  padding:16px 17px;margin-bottom:9px;transition:border-color .25s,background .25s,transform .25s}
+.lnk:active{transform:scale(.985)}
+@media(hover:hover){.lnk:hover{border-color:var(--cv);background:var(--panel-2)}}
+.lnk .ico{width:34px;height:34px;flex:none;display:grid;place-items:center;border:1px solid var(--line);
+  font-size:14px;color:var(--cv);background:#0c0f11}
+.lnk .txt{flex:1;min-width:0}
+.lnk .t{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;letter-spacing:.01em;line-height:1.25}
+.lnk .d{color:var(--dim);font-size:11.5px;line-height:1.45;margin-top:3px}
+.lnk .arw{color:var(--dim2);font-size:15px;flex:none;transition:transform .25s,color .25s}
+@media(hover:hover){.lnk:hover .arw{transform:translateX(4px);color:var(--cv)}}
+.lnk.primary{border-color:rgba(232,118,60,.45);background:linear-gradient(180deg,rgba(232,118,60,.09),rgba(232,118,60,.02))}
+.lnk.primary .ico{border-color:rgba(232,118,60,.4)}
+.lnk.soon{opacity:.5}
+.badge{display:inline-block;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--bg);
+  background:var(--cv);padding:2px 6px;margin-left:7px;vertical-align:1.5px;font-weight:500}
+.badge.ghost{background:none;color:var(--dim2);border:1px solid var(--line)}
+
+/* ── rider ──────────────────────────────────────── */
+.rider{border:1px solid var(--line);background:var(--panel);padding:16px 17px;font-size:12px;line-height:1.7;color:var(--dim)}
+.rider b{color:var(--ink);font-weight:500}
+.rider .cfg{color:var(--sig);font-size:10px;letter-spacing:.2em;text-transform:uppercase;display:block;margin:12px 0 3px}
+.rider .cfg:first-child{margin-top:0}
+
+/* ── footer ─────────────────────────────────────── */
+.foot{margin-top:44px;border-top:1px solid var(--line);padding-top:18px;color:var(--dim2);font-size:11px;line-height:1.8}
+.foot a{color:var(--dim);border-bottom:1px solid var(--line)}
+@media(hover:hover){.foot a:hover{color:var(--cv);border-color:var(--cv)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="term">┌── hypnotic.sys ──┐
+│ &gt; ./live_set.sh  │
+└─ ▒▒▒▒▒▒▒▒ 100% ─┘</div>
+
+  <h1 class="name">LEANDRO TAIBBI</h1>
+  <p class="tagline">Hypnotic techno · live &amp; DJ.<br><b>I play instruments I build myself.</b></p>
+  <p class="meta">Milan, IT · 6× Xone:K2 + Ableton · Max for Live</p>
+  <div class="status"><span class="dot"></span>Available for booking</div>
+
+  <!-- ═══════════ BOOKING — prima cosa che vede un promoter ═══════════ -->
+  <div class="sec">
+    <div class="sec-h"><span class="jack"></span><span>Booking</span><span class="ln"></span></div>
+
+    <a class="lnk primary" href="epk.html">
+      <span class="ico">▦</span>
+      <span class="txt"><span class="t">Press kit &amp; technical rider</span>
+        <span class="d">Bio, live setup, tour history, press images</span></span>
+      <span class="arw">→</span>
+    </a>
+
+    <a class="lnk primary" href="mailto:leandrotaibbi@hotmail.it?subject=Booking%20request%20%E2%80%94%20Leandro%20Taibbi&amp;body=Event%3A%0ADate%3A%0ACity%20%2F%20venue%3A%0AFormat%20(DJ%20set%20%2F%20live)%3A%0ASet%20time%3A%0ABudget%3A%0A%0A">
+      <span class="ico">✉</span>
+      <span class="txt"><span class="t">Booking request</span>
+        <span class="d">leandrotaibbi@hotmail.it — worldwide, clubs &amp; festivals</span></span>
+      <span class="arw">→</span>
+    </a>
+
+    <div class="rider" style="margin-top:9px">
+      <span class="cfg">Config A · DJ set</span>
+      4× Pioneer CDJ-3000 · <b>Pioneer DJM-V10</b> or <b>Allen &amp; Heath Xone:96</b> · booth monitor min. 15"
+      <span class="cfg">Config B · Live electronics</span>
+      <b>6× Allen &amp; Heath Xone:K2</b> + Faderfox PC12 + APC40 mkII + MacBook Pro <span style="color:var(--dim2)">(all provided by artist)</span> · Xone:96 · table min. 200 cm
+      <span class="cfg">Config C · Reduced live</span>
+      2× Xone:K2 + laptop on any standard club mixer — <b>when logistics are tight</b>
+    </div>
+  </div>
+
+  <!-- ═══════════ ASCOLTA ═══════════ -->
+  <div class="sec">
+    <div class="sec-h"><span class="jack"></span><span>Listen</span><span class="ln"></span></div>
+
+    <!-- SOSTITUISCI questo href con il tuo set da 90 minuti quando lo pubblichi -->
+    <a class="lnk" href="https://www.youtube.com/@leandrotaibbi" target="_blank" rel="noopener">
+      <span class="ico">▶</span>
+      <span class="txt"><span class="t">Full live sets<span class="badge">Start here</span></span>
+        <span class="d">Recorded live sets and studio sessions — the fastest way to hear what I do</span></span>
+      <span class="arw">→</span>
+    </a>
+
+    <a class="lnk" href="https://leandrotaibbi.bandcamp.com" target="_blank" rel="noopener">
+      <span class="ico">◈</span>
+      <span class="txt"><span class="t">Bandcamp</span>
+        <span class="d">Independent catalogue — modular studies, rhythmic deconstruction</span></span>
+      <span class="arw">→</span>
+    </a>
+
+    <a class="lnk" href="https://www.beatport.com/artist/leandro-taibbi/390624" target="_blank" rel="noopener">
+      <span class="ico">◉</span>
+      <span class="txt"><span class="t">Beatport — discography</span>
+        <span class="d">Diffuse Reality · Rowan Underground · Ithica · CommonSense · Risonanze Asettiche</span></span>
+      <span class="arw">→</span>
+    </a>
+  </div>
+
+  <!-- ═══════════ DATE ═══════════ -->
+  <div class="sec">
+    <div class="sec-h"><span class="jack"></span><span>Dates</span><span class="ln"></span></div>
+    <!-- AGGIORNA QUI: una riga per data. Quando non ce ne sono, lascia il blocco "no dates". -->
+    <div class="rider">
+      <span class="cfg">Next</span>
+      No public dates announced right now.<br>
+      <span style="color:var(--dim2)">New dates go up on Instagram first — <a href="https://www.instagram.com/leandro_taibbi/" target="_blank" rel="noopener" style="color:var(--sig)">@leandro_taibbi</a></span>
+      <span class="cfg">Played</span>
+      <b>IT</b> Milan · resident, multiple dates &nbsp;·&nbsp; <b>IT</b> Turin &nbsp;·&nbsp; <b>IT</b> Catania<br>
+      <b>UK</b> Birmingham &nbsp;·&nbsp; <b>CH</b> Zurich &nbsp;·&nbsp; <b>DE</b> Germany
+    </div>
+  </div>
+
+  <!-- ═══════════ STRUMENTI ═══════════ -->
+  <div class="sec">
+    <div class="sec-h"><span class="jack"></span><span>Instruments</span><span class="ln"></span></div>
+    <!-- Quando il device è online: togli la classe "soon", metti il link Gumroad e cambia il badge -->
+    <a class="lnk soon" href="#">
+      <span class="ico">⌘</span>
+      <span class="txt"><span class="t">Max for Live devices<span class="badge ghost">Soon</span></span>
+        <span class="d">The polymetric sequencer and modulation tools I use in the live set</span></span>
+      <span class="arw">→</span>
+    </a>
+  </div>
+
+  <!-- ═══════════ SOCIAL ═══════════ -->
+  <div class="sec">
+    <div class="sec-h"><span class="jack"></span><span>Elsewhere</span><span class="ln"></span></div>
+    <a class="lnk" href="https://www.instagram.com/leandro_taibbi/" target="_blank" rel="noopener">
+      <span class="ico">◐</span>
+      <span class="txt"><span class="t">Instagram</span>
+        <span class="d">@leandro_taibbi — live clips, rig, technique</span></span>
+      <span class="arw">→</span>
+    </a>
+  </div>
+
+  <div class="foot">
+    <b style="color:var(--dim)">LEANDRO TAIBBI</b> · est. 1996, Sicily · based in Milan, Italy<br>
+    Booking &amp; press: <a href="mailto:leandrotaibbi@hotmail.it">leandrotaibbi@hotmail.it</a><br>
+    <span style="color:var(--line)">─────────────</span><br>
+    <span style="color:var(--dim2)">&gt; repetition as a way in. the machine left to speak for itself.</span>
+  </div>
+
+</div>
+</body>
+</html>
