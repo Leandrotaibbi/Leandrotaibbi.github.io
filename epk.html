@@ -4,7 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>document.documentElement.className+=' js';</script>
-<noscript><style>.rise{opacity:1!important;transform:none!important}</style></noscript>
+<noscript><style>.rise{opacity:1!important;transform:none!important}
+  /* ── upcoming date ─────────────────────────────── */
+  .next-date{display:flex;align-items:center;gap:clamp(18px,3vw,40px);border:1px solid var(--cv);
+    background:linear-gradient(90deg,rgba(232,118,60,.10),rgba(232,118,60,.02));
+    padding:30px 32px;text-decoration:none;transition:background .3s}
+  .next-date:hover{background:linear-gradient(90deg,rgba(232,118,60,.18),rgba(232,118,60,.05))}
+  .nd-date{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.2em;color:var(--cv);
+    white-space:nowrap;border-right:1px solid var(--line);padding-right:clamp(18px,3vw,38px)}
+  .nd-main{display:flex;flex-direction:column;gap:6px;flex:1}
+  .nd-city{font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(1.4rem,3.2vw,2rem);color:var(--ink);line-height:1}
+  .nd-type{font-family:'IBM Plex Mono',monospace;font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--sig)}
+  .nd-go{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
+  .nd-go::after{content:' →';color:var(--cv)}
+  @media(max-width:620px){.next-date{flex-wrap:wrap;gap:14px}.nd-date{border:0;padding:0;width:100%}.nd-go{width:100%}}
+  /* ── live sets ─────────────────────────────────── */
+  .rel-grid.sets{grid-template-columns:repeat(3,1fr)}
+  .rel.set{gap:9px;padding:24px 22px}
+  .set-len{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cv);margin-top:2px}
+  @media(max-width:860px){.rel-grid.sets{grid-template-columns:1fr}}
+</style></noscript>
 <title>Leandro Taibbi — Electronic Press Kit</title>
 <meta name="description" content="Leandro Taibbi — hypnotic techno producer, DJ and live performer from Milan. Hybrid live on 6x Allen &amp; Heath Xone:K2 and Ableton with self-built Max for Live instruments. Booking, technical rider and press kit.">
 <meta property="og:title" content="Leandro Taibbi — Electronic Press Kit">
@@ -404,6 +423,16 @@
       <a class="rel" href="https://www.beatport.com/release/stelle-ep/3282368" target="_blank" rel="noopener"><span class="rel-t">Stelle EP</span><span class="rel-l">Natura Viva Black</span></a>
       <a class="rel" href="https://www.beatport.com/release/my-way-ep/3776961" target="_blank" rel="noopener"><span class="rel-t">My Way EP</span><span class="rel-l">Gain Plus</span></a>
     </div>
+    <div class="eyebrow rise" style="margin-top:76px"><span class="jack"></span><span class="eyebrow-label">Full live sets</span><span class="eyebrow-line"></span></div>
+    <p class="support-note rise" style="margin:-18px 0 26px">Hour-long sets recorded for radio and club platforms. Start anywhere.</p>
+    <div class="rel-grid sets rise d1">
+      <a class="rel set" href="https://www.youtube.com/watch?v=Xpp1LOIlvFs" target="_blank" rel="noopener">
+        <span class="rel-l">Tempio Radio · 2026</span><span class="rel-t">Leandro Taibbi x Tempio Radio</span><span class="set-len">56 min · live</span></a>
+      <a class="rel set" href="https://www.youtube.com/@lineamilano/search?query=taibbi" target="_blank" rel="noopener">
+        <span class="rel-l">LINEA Milano · 2025</span><span class="rel-t">The Saturn Movement E15</span><span class="set-len">55 min · live</span></a>
+      <a class="rel set" href="https://www.youtube.com/watch?v=IDS4Kqn2Y3k" target="_blank" rel="noopener">
+        <span class="rel-l">BADradio · Wherehouse</span><span class="rel-t">BADradio #44 — Hypnotic / Raw / Berlin</span><span class="set-len">59 min · live</span></a>
+    </div>
     <p class="support-note rise d2" style="margin-top:26px">Also released on Dolma Rec, Teoria Perfekta, Black Kat, Occultus, Gain Records, Comade Music and In Dushe. Recent solo material — <em>r.seed-off</em>, <em>null self.dll</em>, <em>feedback=&oslash;</em>, <em>data:biometric:deleted</em> — on Risonanze Asettiche.</p>
   </section>
 
@@ -453,7 +482,13 @@
 
   <!-- DATES -->
   <section id="dates" class="wrap" style="padding-top:0">
-    <div class="eyebrow rise"><span class="jack"></span><span class="eyebrow-label">Tour history</span><span class="eyebrow-line"></span></div>
+    <div class="eyebrow rise"><span class="jack"></span><span class="eyebrow-label">Upcoming</span><span class="eyebrow-line"></span></div>
+    <a class="next-date rise" href="https://www.instagram.com/leandro_taibbi/" target="_blank" rel="noopener">
+      <span class="nd-date">19 SEP 2026</span>
+      <span class="nd-main"><span class="nd-city">Cyprus</span><span class="nd-type">Live electronics · 6× Xone:K2 + Ableton</span></span>
+      <span class="nd-go">Details</span>
+    </a>
+    <div class="eyebrow rise" style="margin-top:74px"><span class="jack"></span><span class="eyebrow-label">Tour history</span><span class="eyebrow-line"></span></div>
     <ul class="dates">
       <li class="date rise"><span class="flag">IT</span><span class="city">Milan</span><span class="type">Resident · multiple dates</span></li>
       <li class="date rise"><span class="flag">IT</span><span class="city">Turin</span><span class="type">Guest</span></li>
