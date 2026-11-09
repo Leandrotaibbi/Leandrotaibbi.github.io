@@ -1,400 +1,330 @@
-# MATH × TECHNO — 12 Reels · 30 s · 1080×1920
+# MATH × TECHNO — 12 Reels · 30 s · 1080×1920 · con audio
 
-Serie "nerd": una equazione, un visual che È il fenomeno (non un'icona), una
-applicazione concreta in techno a 130 BPM, una CTA. Tutti i numeri sono calcolati
-(130 BPM → beat 461.54 ms · bar 1.846 s · 16th 115.38 ms · 8th 230.77 ms).
+Formato "viewport": scena 3D vera (proiezione prospettica, facce ombreggiate ordinate per profondità,
+wireframe, griglia a terra, nebbia) incorniciata come una finestra di Blender — overlay "User Perspective",
+gizmo degli assi, timeline a 900 frame, status bar con conteggio di vertici/facce. Sotto: due pannelli
+(PARAMETERS / DERIVED) con i numeri che si aggiornano in tempo reale, il blocco formule in serif, e una
+frase per fase (4 × 7.5 s) con la parola chiave nel colore d'accento.
 
-Struttura fissa di ogni reel (formato "lesson", come i riferimenti che mi hai mandato —
-così l'occhio impara il formato e resta):
+Tipografia: STIX Two (serif da paper, per formule e frasi) · Share Tech Mono (pannelli dati) · VT323 (titoli)
+· DejaVu Sans (overlay del viewport, lo stesso di Blender). Ogni episodio ha la sua palette; nessuna è
+condivisa. Tre episodi (04, 07, 12) sono in registro chiaro.
 
-- **Header** in maiuscoletto mono: `LESSON: …` · `TRACK: LEANDRO TAIBBI – ID` · `130 BPM` ·
-  `UNRELEASED` + 4 pillole che indicano a che punto del reel sei. Track e label sono
-  campi (`track`, `label`) nell'oggetto del reel: quando il reel gira sopra un tuo pezzo
-  edito, mettici titolo ed etichetta vera (CommonSense / Diffuse Reality / Ithica…).
-- **Un solo visual grande** al centro, animato a 130 BPM, che È il fenomeno (il cerchio
-  euclideo con la testina, le due sinusoidi che battono davvero, la biforcazione che si
-  disegna). Pulsa leggermente su ogni kick.
-- **Una frase sola** (Archivo light) con **una parola in bold**, che cambia 4 volte: una
-  ogni 7.5 s. Sotto, una riga mono piccola con il numero.
-- **La formula** in fondo, sempre visibile. Handle e tagline nel footer.
-- 9 episodi scuri, 3 chiari (EP04, EP08, EP12) per alternare il registro.
+Audio: sintetizzato in `synth.py` (numpy/scipy) a 130 BPM, 48 kHz. Ogni loop dimostra la matematica
+dell'episodio (vedi riga "Audio" sotto). È un bozzetto: sostituiscilo con il tuo materiale quando vuoi,
+il video è muto fino al mux (`ffmpeg -i video -i out/audio/EPnn.wav`).
 
-Niente schermata CTA finale: il reel finisce sulla quarta frase, come nei riferimenti.
-La CTA sta nella caption.
-
----|---|---|
-| 0.0 – 2.8 s | HOOK | prompt da terminale + frase grande in Syne, ultima riga arancione |
-| 2.8 – 24.2 s | BODY | visual animato + 6 righe "console" che si scrivono una alla volta |
-| 24.2 – 27.6 s | APPLY IT | la mossa pratica (Ableton / Max for Live / hardware) |
-| 27.6 – 30 s | CTA | MATH × TECHNO · @leandro_taibbi · "next episode: …" |
-
-Ordine consigliato di pubblicazione: come numerati (ogni CTA annuncia il successivo →
-loop di 12). Postare 2–3 a settimana; i video sono MUTI: sotto ci va un tuo loop
-a 130 BPM, meglio se dimostra la cosa (es. EP03 con il beating reale, EP09 con le
-hat swingate). Voce fuori campo opzionale: lo script VO qui sotto è pensato per
-25 secondi parlati in italiano, il testo a schermo resta in inglese come il resto
-del profilo.
+Tutti i numeri a schermo sono calcolati a 130 BPM: beat 461.54 ms · bar 1.846 s · 16th 115.38 ms · 8th 230.77 ms.
 
 ---
 
-## EP01 · euclid — `EP01-euclid.mp4`
+## EP01 · EUCLIDEAN RHYTHMS — `EP01-euclid.mp4`
 
-**A schermo (4 frasi × 7.5 s):**
-1. Your hi-hats are a *theorem*. — _E(5,16) · five hits over sixteen steps_
-2. Spread 5 hits as *evenly* as integers allow. — _steps 0 · 4 · 7 · 10 · 13_
-3. Add E(7,16). They *share* three steps. — _tension without a fill_
-4. Rotate one step. *New groove.* Zero new notes. — _Max for Live: one expr object per voice_
+**Tag a schermo:** Bjorklund · Christoffel words · Sturmian sequences · rotations in ℤ/16ℤ  
+**Oggetto Blender:** `EP01_euclid_ring`  
+**Audio:** kick 4/4 · hat E(5,16) · clap E(7,16) dalla terza frase · rotazione di uno step per battuta nell'ultima
 
-**Equazione:** hit(i) = ((i·k) mod n) < k
+**Formule a schermo:**
+- E(k,n)ᵢ = ⌊(i+1)k/n⌋ − ⌊ik/n⌋
+- 5/16 = 1/(3 + 1/5)   ·   7/16 = 1/(2 + 1/(3 + 1/2))
 
-**VO (it):** Le tue hi-hat sono un teorema. Euclide, trecento avanti Cristo.
-Distribuisci k colpi su n step nel modo più uniforme possibile: E(5,16) è il tresillo,
-E(7,16) è il tuo clap. Sovrapponi le due: condividono solo tre step, zero fill, tensione
-gratis. Ruota il pattern di uno step e hai un groove nuovo senza scrivere una nota.
+**Le 4 frasi (7.5 s ciascuna):**
+1. E(k,n) is the Christoffel word of slope k/n: the lattice path that stays closest to the line y = kx/n. Bjorklund (2003) rediscovered Bresenham (1965).
+2. 5/16 = [0; 3, 5]. The inter-onset intervals are 3 and 4, appearing 3 and 1 times: a Sturmian word has two gap lengths, never more.
+3. 7/16 = [0; 2, 3, 2]. Layered on E(5,16) they coincide on 3 of 16 steps — gcd(5,7) = 1 guarantees the two polygons never align.
+4. Rotation is adding a unit in ℤ/16ℤ: same necklace, a new bracelet. Zero new notes, a different groove every bar.
+
+**VO (it, ~25 s):** Le tue hi-hat sono una parola di Christoffel: il cammino sul reticolo che sta più vicino alla retta y uguale k x su n. Bjorklund nel 2003 ha riscoperto Bresenham del 1965. Cinque sedicesimi è zero, tre, cinque in frazione continua: gli intervalli sono solo 3 e 4, una parola sturmiana ha due distanze e basta. Sovrapponi E(7,16): coincidono su tre step, perché il massimo comun divisore di 5 e 7 è uno. Ruota di uno step: stessa collana, braccialetto nuovo, zero note nuove.
 
 **Caption:**
-Your hi-hats are a theorem.
-E(k,n): spread k hits over n steps as evenly as integers allow. One line of code —
-hit(i) = ((i·k) mod n) < k — gives you the tresillo, the cinquillo, your clap pattern,
-and the timing of a neutron accelerator. E(5,16) over E(7,16) share only 3 steps:
-tension without a fill. Rotate, don't redraw.
-Max for Live: [expr ($i1*$i2)%$i3<$i2] per voice.
-EP.01 / 12 — MATH × TECHNO
-#euclideanrhythm #maxforlive #hypnotictechno #technoproducer #ableton #musicmath
-#sounddesign #modularsynth #technomusic #producertips
+Your hi-hats are a Christoffel word. E(k,n) is the lattice path closest to y = kx/n — Bjorklund (2003) rediscovered Bresenham (1965). 5/16 = [0;3,5]: inter-onset intervals 3 and 4 only (Sturmian: two gaps, never more). Layer E(7,16): they coincide on 3 of 16 steps because gcd(5,7) = 1. Rotation = adding a unit in Z/16Z — same necklace, new bracelet, zero new notes.
+Max for Live: E(k,n)[i] = floor((i+1)k/n) − floor(ik/n).
+EP.01 / 12
+#euclideanrhythm #bjorklund #christoffelword #maxforlive #hypnotictechno #musicmath #sturmian #modularsynth #technoproducer #blender3d
 
 ---
 
-## EP02 · lcm — `EP02-lcm.mp4`
+## EP02 · CHINESE REMAINDER THEOREM — `EP02-crt-torus.mp4`
 
-**A schermo (4 frasi × 7.5 s):**
-1. Two loops. Sixteen steps against *seven*. — _kick every 4 · bleep every 7_
-2. They meet again after *112* steps. — _lcm(16,7) · seven bars_
-3. Every bar the bleep lands *somewhere else*. — _step 0 · 7 · 14 · 5 · 12 · 3 · 10_
-4. That drift is the *hypnosis*. No automation. — _Ableton: one clip in 7/16, the rest in 4/4_
+**Tag a schermo:** ℤ/112ℤ ≅ ℤ/16ℤ × ℤ/7ℤ · torus orbits · coprime loop lengths  
+**Oggetto Blender:** `EP02_Z16xZ7_torus`  
+**Audio:** kick 4/4 · bleep a ciclo di 7 sedicesimi (CRT) · hat sul 2 e 4
 
-**Equazione:** lcm(16,7) = 112 steps = 7 bars
+**Formule a schermo:**
+- ℤ/112ℤ ≅ ℤ/16ℤ × ℤ/7ℤ   (gcd = 1)
+- i ≡ a (mod 16), i ≡ b (mod 7)  ⇒  i = 49a + 64b (mod 112)
 
-**VO (it):** Un loop di kick su sedici step, un bleep su sette. Minimo comune multiplo:
-centododici step, sette battute prima che si riallineino. Ogni battuta il bleep cade su
-un sedicesimo diverso. Quella deriva è l'ipnosi: niente automazioni, niente suoni nuovi.
-Lunghezze coprime massimizzano il ciclo. A 130 il giro completo dura 12,9 secondi:
-l'orecchio non lo becca mai.
+**Le 4 frasi (7.5 s ciascuna):**
+1. Every step is a point on a torus: (i mod 16, i mod 7). Because gcd(16,7) = 1 the orbit visits all 112 cells exactly once before closing.
+2. Chinese remainder theorem: ℤ/112ℤ ≅ ℤ/16ℤ × ℤ/7ℤ. From the pair (a, b) back to the step: i = 49a + 64b (mod 112).
+3. 16 ≡ 2 (mod 7): each bar the 7-step bleep slides two steps against the kick. The drift is the music; seven bars close the loop.
+4. Replace 7 by 8: gcd = 8 and the torus collapses to 16 cells — the pattern repeats every bar. Coprimality is the whole trick.
+
+**VO (it, ~25 s):** Ogni step è un punto su un toro: i modulo sedici, i modulo sette. Siccome sedici e sette sono coprimi l'orbita visita tutte le centododici celle una volta sola. Teorema cinese del resto: da una coppia di coordinate si torna allo step con i uguale quarantanove a più sessantaquattro b modulo centododici. Sedici è congruo a due modulo sette: ogni battuta il bleep scivola di due step contro la cassa. Metti otto al posto di sette e il toro collassa a sedici celle. La coprimalità è tutto il trucco.
 
 **Caption:**
-Two loops. One catches the other every 7 bars.
-lcm(16,7) = 112 steps. The 7-step bleep lands on a different 16th every bar:
-0, 7, 14, 5, 12, 3, 10… That drift is the hypnosis — no automation, no new sounds.
-Coprime lengths maximise the cycle (7 vs 16 → 112; 8 vs 16 → 16, boring).
-Ableton: one clip in 7/16, everything else in 4/4. Launch. Walk away.
-EP.02 / 12 — MATH × TECHNO
-#polymeter #hypnotictechno #ableton #technoproducer #musicmath #loop #minimaltechno
-#producertips #sounddesign #technomusic
+Every step of a 16-against-7 polymeter is a point on a torus (i mod 16, i mod 7). gcd = 1 → the orbit visits all 112 cells once. Chinese remainder theorem: Z/112Z ≅ Z/16Z × Z/7Z, i = 49a + 64b (mod 112). 16 ≡ 2 (mod 7): the bleep slides two steps per bar. Replace 7 with 8 and the torus collapses to 16 cells.
+Ableton: one clip in 7/16, everything else 4/4.
+EP.02 / 12
+#polymeter #chineseremaindertheorem #numbertheory #hypnotictechno #ableton #musicmath #torus #technoproducer #generativemusic #blender3d
 
 ---
 
-## EP03 · beating — `EP03-beating.mp4`
+## EP03 · BEATING & DETUNE — `EP03-beating.mp4`
 
-**A schermo (4 frasi × 7.5 s):**
-1. Detune is a *tempo*. — _55.000 Hz against 55.300 Hz_
-2. Two sines become one that *breathes*. — _beat every 3.33 s · random · unmusical_
-3. Make it breathe every *two bars*. — _detune = 0.2708 Hz = +8.5 cents_
-4. A sidechain you never *programmed*. — _detune(Hz) = BPM / 60 / beats per cycle_
+**Tag a schermo:** sum-to-product identity · envelope at Δf · cents = 1200·log₂ · grid-locked AM  
+**Oggetto Blender:** `EP03_phasor_pair`  
+**Audio:** sub 55 Hz + 55.3 Hz, poi 55.2708 Hz dalla terza frase (battimento ogni 2 battute) · kick corto sul beat
 
-**Equazione:** f_beat = |f₁ − f₂| · detune(Hz) = BPM / (60 · beats per cycle)
+**Formule a schermo:**
+- sin a + sin b = 2·sin((a + b)/2)·cos((a − b)/2)
+- Δf = BPM / (60 · beats per cycle)   ·   ¢ = 1200·log₂(f₂/f₁)
 
-**VO (it):** Il detune è un tempo. Due oscillatori vicini in pitch diventano un'unica
-sinusoide che respira. Cinquantacinque contro cinquantacinque virgola tre: un battimento
-ogni tre secondi e trentatré, a caso. Vuoi che respiri ogni due battute a 130? Due
-battute sono 3,692 secondi, quindi detune 0,2708 hertz. In cents: otto e mezzo.
-Un sidechain che non hai programmato.
+**Le 4 frasi (7.5 s ciascuna):**
+1. sin a + sin b = 2 sin((a+b)/2)·cos((a−b)/2): a carrier at the mean frequency with an envelope at half the difference.
+2. |cos| peaks twice per period, so the audible beat is at Δf, not Δf/2. 55.000 vs 55.300 Hz → 0.300 Hz, every 3.333 s. Unrelated to 130 BPM.
+3. Choose Δf = 1/(2 bars) = 130/(60·8) = 0.2708 Hz. In pitch: 1200·log₂(55.2708/55) = 8.5 cents — below the JND for pitch, far above it for rhythm.
+4. Two free oscillators, zero modulators: amplitude modulation phase-locked to the grid by arithmetic. No LFO, no sidechain, one number.
+
+**VO (it, ~25 s):** Seno a più seno b uguale due seno della semisomma per coseno della semidifferenza: una portante alla frequenza media e un inviluppo a metà della differenza. Il valore assoluto del coseno ha due picchi per periodo, quindi il battimento che senti è a delta f, non delta f mezzi. Cinquantacinque contro cinquantacinque virgola tre: uno ogni tre secondi e trentatré, scollegato dai centotrenta. Scegli delta f uguale uno su due battute: zero virgola duemilasettecentootto hertz, otto cents e mezzo. Due oscillatori liberi, nessun LFO, nessun sidechain, un numero.
 
 **Caption:**
-Detune is a tempo.
-Two oscillators 0.3 Hz apart beat every 3.33 s — random, unmusical.
-Want the wobble every 2 bars @130? 2 bars = 3.692 s → detune = 0.2708 Hz =
-+8.5 cents on an A1 sub. A sidechain you never programmed.
-Formula: detune(Hz) = BPM / (60 · beats per cycle).
-EP.03 / 12 — MATH × TECHNO
-#detune #sounddesign #subbass #hypnotictechno #synthesis #musicmath #ableton
-#technoproducer #modularsynth #psychoacoustics
+sin a + sin b = 2·sin((a+b)/2)·cos((a−b)/2): a carrier at the mean frequency, an envelope at half the difference — |cos| peaks twice per period so the beat you hear is at Δf. 55 vs 55.3 Hz → every 3.33 s, unrelated to the grid. Choose Δf = 1/(2 bars) = 130/(60·8) = 0.2708 Hz = +8.5 cents on A1: amplitude modulation phase-locked to the bar from two free oscillators. No LFO, no sidechain.
+EP.03 / 12
+#detune #beating #psychoacoustics #subbass #hypnotictechno #sounddesign #musicmath #synthesis #technoproducer #blender3d
 
 ---
 
-## EP04 · phi — `EP04-phi.mp4`
+## EP04 · THE GOLDEN DELAY — `EP04-phi-delay.mp4`
 
-**A schermo (4 frasi × 7.5 s):**
-1. The most *irrational* delay time. — _φ = 1.6180339…  ·  1/φ = 0.618…_
-2. A 3/4-beat delay lands back on the *grid*. — _four repeats, then nothing new_
-3. A 1/φ-beat delay *never* lands on a 16th. — _0.618 · 1.236 · 1.854 · 2.472 beats_
-4. A cloud, not an *echo*. — _285 ms · feedback 60 % · the dub-techno trick_
+**Tag a schermo:** continued fractions · Hurwitz bound · three-gap theorem · Weyl equidistribution  
+**Oggetto Blender:** `EP04_golden_cone`  
+**Audio:** kick 4/4 · rimshot sull'1 con delay: dry → 3/4 di beat (346 ms, feedback 0.6) → 1/φ (285.3 ms)
 
-**Equazione:** φ = (1+√5)/2 · delay = beat_ms × 0.618
+**Formule a schermo:**
+- φ = 1 + 1/(1 + 1/(1 + 1/(1 + ⋯)))   ·   |φ − p/q| > 1/(√5 q²)
+- tₙ = n·Tbeat/φ   ⇒   {n/φ} equidistributed on [0,1)
 
-**VO (it):** Il tempo di delay più irrazionale che esista. Phi è il numero più difficile
-da approssimare con una frazione: frazione continua tutta di uno. Un delay a tre quarti
-di beat torna sulla griglia in quattro ripetizioni: ordinato, morto. Un delay a uno su
-phi, 285 millisecondi a 130, non cade mai su un sedicesimo. Mai. Risultato: una nuvola,
-non un'eco. Il trucco dub-techno che nessuno nomina.
+**Le 4 frasi (7.5 s ciascuna):**
+1. φ = [1; 1, 1, 1, …] has the slowest-converging continued fraction of any real. Hurwitz: |φ − p/q| > 1/(√5·q²) for every fraction — the most irrational number.
+2. A 3/4-beat delay is q = 4: after four repeats the tap is back on the grid. The tail is a comb of coincidences, not a cloud.
+3. Taps at n/φ (mod 1) on the beat-circle: by the Steinhaus three-gap theorem n points make at most three distinct gaps, and never coincide.
+4. 285.3 ms at 130 BPM. Repeats at 0.618, 1.236, 1.854, 2.472… beats — equidistributed (Weyl), never on a 16th. Feedback 60 %.
+
+**VO (it, ~25 s):** Phi è uno, uno, uno, uno in frazione continua: converge più lentamente di qualsiasi altro numero reale. Hurwitz: la distanza da ogni frazione p su q è maggiore di uno su radice di cinque q quadro. Un delay a tre quarti di beat ha q uguale quattro: dopo quattro ripetizioni sei di nuovo sulla griglia, un pettine di coincidenze. Un delay a uno su phi: per il teorema dei tre gap di Steinhaus n colpi fanno al massimo tre distanze diverse, e non coincidono mai. Duecentottantacinque millisecondi a centotrenta. Feedback sessanta per cento.
 
 **Caption:**
-The most irrational delay time.
-φ = 1.618… has the slowest-converging continued fraction of any number: [1;1,1,1,…].
-A 3/4-beat delay lands back on the grid after 4 repeats. A 1/φ-beat delay
-(285.3 ms @130) never lands on a 16th — repeats at 0.618, 1.236, 1.854, 2.472 beats,
-all off-grid, none the same distance. A cloud, not an echo.
-Delay = beat_ms × 0.618, feedback 60 %.
-EP.04 / 12 — MATH × TECHNO
-#goldenratio #delay #dubtechno #hypnotictechno #sounddesign #musicmath #ableton
-#technoproducer #mixingtips #ambienttechno
+The most irrational delay time. φ = [1;1,1,1,…] converges slower than any other real; Hurwitz: |φ − p/q| > 1/(√5·q²). A 3/4-beat delay (q = 4) is back on the grid after 4 repeats — a comb of coincidences. Taps at n/φ on the beat-circle obey the Steinhaus three-gap theorem: at most 3 distinct gaps, never a coincidence, equidistributed (Weyl). 285.3 ms @130, feedback 60 %.
+EP.04 / 12
+#goldenratio #continuedfractions #threegaptheorem #delay #dubtechno #hypnotictechno #musicmath #sounddesign #technoproducer #blender3d
 
 ---
 
-## EP05 · primes — `EP05-primes.mp4`
+## EP05 · PRIME LOOP LENGTHS — `EP05-primes.mp4`
 
-**A schermo (4 frasi × 7.5 s):**
-1. Primes don't *repeat*. — _three loops: 3 · 5 · 7 bars_
-2. Nothing lines up for *105* bars. — _3 minutes 14 seconds at 130 BPM_
-3. 4 · 8 · 16 repeats every *29 seconds*. — _you hear it. they hear it._
-4. The hypnosis is *arithmetic*. — _pad 3 bars · hats 5 · acid line 7 · follow actions off_
+**Tag a schermo:** lcm · conjunctions · P(coprime) = 1/ζ(2) = 6/π² · state space  
+**Oggetto Blender:** `EP05_orrery_3_5_7`  
+**Audio:** pad a ciclo di 3 battute · hat a ciclo di 5 · acid a ciclo di 7 · kick 4/4
 
-**Equazione:** lcm(3,5,7) = 105 bars = 193.8 s = 3:14 @130
+**Formule a schermo:**
+- lcm(a,b,c) = abc  ⇔  pairwise coprime
+- P(gcd(a,b) = 1) = 1/ζ(2) = 6/π² ≈ 0.6079
 
-**VO (it):** I primi non si ripetono, e nemmeno tu dovresti. Tre layer che loopano a
-tre, cinque e sette battute. Minimo comune multiplo centocinque: tre minuti e quattordici
-a 130 prima che la combinazione si ripeta. Un impianto quattro-otto-sedici si ripete ogni
-sedici battute, ventinove secondi: lo senti tu, lo sentono loro. Con i primi ogni battuta
-è una combinazione che la traccia non ha ancora suonato. L'ipnosi non sono i suoni.
-È l'aritmetica.
+**Le 4 frasi (7.5 s ciascuna):**
+1. Three loops of 3, 5 and 7 bars are three planets: a conjunction of all three every lcm = 105 bars = 3:14 at 130 BPM. Kepler for the dancefloor.
+2. Powers of two are the worst case: lcm(4, 8, 16) = 16. The structure repeats every 29.5 s and everyone in the room counts it without knowing.
+3. Two random lengths are coprime with probability 1/ζ(2) = 6/π² ≈ 60.8 %. Three primes make it a certainty — and lcm = the product.
+4. 5·7·11 = 385 bars = 11:50, longer than the track itself. Minimum material, maximum state space: 385 distinct bars from three clips.
+
+**VO (it, ~25 s):** Tre loop da tre, cinque e sette battute sono tre pianeti: congiunzione di tutti e tre ogni centocinque battute, tre minuti e quattordici. Le potenze di due sono il caso peggiore: minimo comune multiplo di quattro, otto, sedici è sedici, la struttura si ripete ogni ventinove secondi e mezzo e tutta la sala la conta senza saperlo. Due lunghezze a caso sono coprime con probabilità sei su pi greco quadro, sessanta virgola otto per cento. Tre primi lo rendono certo. Cinque per sette per undici: trecentottantacinque battute, più lunghe della traccia.
 
 **Caption:**
-Primes don't repeat. Neither should you.
-Three loops at 3, 5 and 7 bars → lcm = 105 bars = 3:14 @130 before anything repeats.
-A 4 + 8 + 16 stack repeats every 16 bars (29.5 s). You hear it. They hear it.
-Push it: 5 · 7 · 11 = 385 bars = 11:50 — longer than the track.
-Clip lengths: pad 3, hats 5, acid 7. Follow actions off. Record 8 minutes.
-EP.05 / 12 — MATH × TECHNO
-#primenumbers #hypnotictechno #ableton #generativemusic #technoproducer #musicmath
-#minimaltechno #livetechno #producertips #loop
+Three loops of 3, 5, 7 bars = three planets: a full conjunction every lcm = 105 bars = 3:14 @130. Powers of two are the worst case: lcm(4,8,16) = 16, the structure repeats every 29.5 s. Two random lengths are coprime with probability 1/ζ(2) = 6/π² ≈ 60.8 %; three primes make it certain and lcm = the product. 5·7·11 = 385 bars = 11:50 — longer than the track.
+EP.05 / 12
+#primenumbers #lcm #zeta #hypnotictechno #ableton #generativemusic #musicmath #minimaltechno #technoproducer #blender3d
 
 ---
 
-## EP06 · kick hz — `EP06-kick-hz.mp4`
+## EP06 · KICK TUNING — `EP06-kick-hz.mp4`
 
-**A schermo (4 frasi × 7.5 s):**
-1. Your kick has a *note*. — _the body settles at 49.0 Hz → G1_
-2. Bass at A1. Kick at G1. *6 Hz* of mud. — _55.0 − 49.0 = 6.0 Hz beating in the low end_
-3. Tune the body to the *root*. — _A1 55.0 Hz · or a fifth below: D1 36.7 Hz_
-4. One semitone down here is *2.9 Hz*. — _the analyser can't see it. the sub can._
+**Tag a schermo:** 12-TET · beating in the sub · 3:2 = 701.955 ¢ · FFT bin resolution  
+**Oggetto Blender:** `EP06_kick_waterfall`  
+**Audio:** kick a 48.999 Hz (G1) per 15 s, poi a 55 Hz (A1) · basso saw A1 dalla seconda frase · battimento a 6 Hz udibile nella prima metà
 
-**Equazione:** f(n) = 440 · 2^(n/12)
+**Formule a schermo:**
+- f(n) = 440 · 2^(n/12)   ·   n = 12·log₂(f/440)
+- 3:2 = 1200·log₂(1.5) = 701.955 ¢   ·   Δfbin = fs / N
 
-**VO (it):** Il tuo kick ha una nota: trovala. Temperamento equabile, una formula.
-Mi1 quarantuno hertz, Sol1 quarantanove, La1 cinquantacinque. Il corpo di una 909 si
-assesta sui cinquanta-sessanta hertz dopo lo sweep: quella è una nota. Kick in Sol1 con
-basso in La1: sei hertz di battimento, fango. Accorda il corpo sulla tonica, o una quinta
-sotto: le armoniche si allineano. Un semitono a quarantanove hertz sono 2,9 hertz.
-L'analizzatore non li vede. Il sub sì.
+**Le 4 frasi (7.5 s ciascuna):**
+1. 12-TET: f(n) = 440·2^(n/12). The kick's pitch sweep decays onto a steady body — a frequency, therefore a note. Here: 49.0 Hz = G1.
+2. G1 = 48.999 Hz under a bass at A1 = 55.000 Hz: Δ = 6.0 Hz. In the sub range a whole tone is not an interval, it is a beating frequency.
+3. Tune the body to the root, or a fifth below: D1 = 36.708 Hz. 3:2 = 701.955 ¢, only 1.955 ¢ off 12-TET: harmonics 3 and 2 meet at 110.12 vs 110.00 Hz.
+4. One semitone at 49 Hz is 2.9 Hz — below one bin of a 4096-point FFT at 48 kHz (11.72 Hz/bin). The analyser cannot resolve it. The sub can.
+
+**VO (it, ~25 s):** Temperamento equabile: f di n uguale quattrocentoquaranta per due alla n dodicesimi. Lo sweep della cassa decade su un corpo stabile: una frequenza, quindi una nota. Qui quarantanove hertz, Sol uno. Sotto un basso in La uno a cinquantacinque hertz sono sei hertz di differenza: nel sub un tono intero non è un intervallo, è un battimento. Accorda alla tonica o una quinta sotto, Re uno a trentasei virgola sette: tre a due sono settecentouno cents, le armoniche tre e due si incontrano a centodieci. Un semitono a quarantanove hertz sono due virgola nove hertz, meno di un bin di una FFT a quattromilanovantasei punti. L'analizzatore non lo vede. Il sub sì.
 
 **Caption:**
-Your kick has a note. Find it.
-f(n) = 440·2^(n/12). E1 = 41.2 Hz · G1 = 49.0 · A1 = 55.0 · C2 = 65.4.
-A 909 body settles around 50–60 Hz after the sweep — that is a note.
-Kick at G1 (49) under a bass at A1 (55) = 6 Hz of beating in the low end = mud.
-Tune the body to the root or a fifth below (D1 36.7): harmonics align, beating stops.
-One semitone at 49 Hz is only 2.9 Hz. The analyser can't see it. The sub can.
-EP.06 / 12 — MATH × TECHNO
-#kickdrum #subbass #mixingtips #hypnotictechno #sounddesign #musicmath #ableton
-#technoproducer #909 #lowend
+12-TET: f(n) = 440·2^(n/12). The kick body decays onto a frequency, therefore a note: 49.0 Hz = G1. Under a bass at A1 = 55 Hz that is Δ = 6.0 Hz — in the sub a whole tone is a beating frequency, not an interval. Tune to the root or a fifth below (D1 = 36.708 Hz; 3:2 = 701.955 ¢). One semitone at 49 Hz = 2.9 Hz, below one bin of a 4096-point FFT at 48 kHz (11.72 Hz). The analyser cannot resolve it. The sub can.
+EP.06 / 12
+#kickdrum #subbass #equaltemperament #fft #mixingtips #hypnotictechno #sounddesign #musicmath #technoproducer #blender3d
 
 ---
 
-## EP07 · lfo hz — `EP07-lfo-hz.mp4`
+## EP07 · TEMPO-LOCKED LFOs — `EP07-lfo-knot.mp4`
 
-**A schermo (4 frasi × 7.5 s):**
-1. Free-running LFOs are *not free*. — _every rate at 130 BPM has a number_
-2. One bar is *0.5417 Hz*. — _2 bars 0.2708 · 4 bars 0.1354 · 8 bars 0.0677_
-3. Sixteen bars is *0.0339 Hz*. — _one filter sweep every 29.5 s_
-4. Type it into the *hardware*. — _tempo sync without a sync cable_
+**Tag a schermo:** f = BPM/(60·β) · (p,q) torus knots · Kronecker–Weyl density  
+**Oggetto Blender:** `EP07_trefoil_LFO`  
+**Audio:** drone saw con filtro: LFO a 1 battuta → due LFO 3:2 su 8 battute (trefoil) → rapporto √2:1 → 4 battute · kick 4/4
 
-**Equazione:** f = BPM / (60 · beats per cycle)
+**Formule a schermo:**
+- fLFO = BPM / (60 · β)   ·   (p,q) knot: θ = p·2πt/T, φ = q·2πt/T
+- gcd(p,q) = 1 ⇒ one closed curve · p/q ∉ ℚ ⇒ dense on T²
 
-**VO (it):** Gli LFO liberi non sono gratis. Ogni modulazione "random" a 130 ha un
-numero. Una battuta: 0,5417 hertz. Quattro: 0,1354. Otto: 0,0677. Sedici battute:
-0,0339 hertz, uno sweep di filtro ogni ventinove secondi e mezzo, il respiro di una
-traccia lunga. Due LFO a 0,1354 e 0,0677 si rifasano ogni 14,8 secondi: una struttura
-di otto battute senza clip. Hardware senza sync? Digita gli hertz. Ora il Buchla va a tempo.
+**Le 4 frasi (7.5 s ciascuna):**
+1. f = BPM/(60·β). At 130: 1 bar → 0.5417 Hz, 4 bars → 0.1354, 8 bars → 0.0677, 16 bars → 0.0339 Hz. A free LFO at 0.1 Hz is none of these.
+2. Two LFOs with rational ratio p:q draw a (p,q) torus knot. 3 cycles against 2 per 8 bars: a trefoil, closing every 14.77 s.
+3. An irrational ratio never closes: the curve is dense on the torus — Kronecker–Weyl. That is the mathematically correct meaning of "random".
+4. Hardware without a sync input: type the hertz. 0.1354 on the Buchla is 4 bars at 130, to the sample. Tempo sync is a division.
+
+**VO (it, ~25 s):** f uguale BPM diviso sessanta beta. A centotrenta: una battuta zero virgola cinquequattroununsette hertz, quattro battute zero virgola unotrecinquequattro, sedici battute zero virgola zerotretrenove. Due LFO con rapporto razionale p su q disegnano un nodo torico: tre cicli contro due in otto battute è un trifoglio, che si richiude ogni quattordici secondi e settantasette. Un rapporto irrazionale non si chiude mai: la curva è densa sul toro, Kronecker-Weyl, il vero significato di random. Hardware senza sync: digita gli hertz. Zero virgola unotrecinquequattro sul Buchla sono quattro battute a centotrenta, al campione.
 
 **Caption:**
-Free-running LFOs are not free.
-f = BPM / (60 · beats). At 130: 1 bar = 0.5417 Hz · 2 = 0.2708 · 4 = 0.1354 ·
-8 = 0.0677 · 16 bars = 0.0339 Hz (one sweep per 29.5 s — the breathing of a long track).
-0.1354 ∧ 0.0677 re-phase every 14.8 s: an 8-bar structure without a clip.
-0.1 Hz "sounds random" only because it is no small multiple of 0.0339.
-Hardware with no sync input: type the Hz.
-EP.07 / 12 — MATH × TECHNO
-#lfo #modularsynth #buchla #hypnotictechno #sounddesign #musicmath #eurorack
-#technoproducer #ableton #synthesis
+f = BPM/(60·β): at 130, 1 bar = 0.5417 Hz, 4 bars = 0.1354, 8 bars = 0.0677, 16 bars = 0.0339 Hz. Two LFOs with a rational ratio p:q trace a (p,q) torus knot — 3 against 2 per 8 bars is a trefoil closing every 14.77 s. An irrational ratio never closes (Kronecker–Weyl: dense on the torus) — the mathematically correct "random". Hardware with no sync input: type the hertz.
+EP.07 / 12
+#lfo #torusknot #buchla #modularsynth #eurorack #hypnotictechno #musicmath #sounddesign #technoproducer #blender3d
 
 ---
 
-## EP08 · xor clock — `EP08-xor-clock.mp4`
+## EP08 · LFSR SEQUENCER — `EP08-lfsr.mp4`
 
-**A schermo (4 frasi × 7.5 s):**
-1. Three dividers. One *XOR*. — _a pulse every 2 · every 3 · every 5 clocks_
-2. The pattern repeats every *30* steps. — _lcm(2, 3, 5) · just under two bars_
-3. OR gives 22 hits. XOR gives *16*. — _odd · lopsided · alive_
-4. Three counters and a *truth table*. — _twelve lines of gen~ · send it to a 909 rim_
+**Tag a schermo:** GF(2) · primitive polynomials · period 2ᵐ − 1 · Turing Machine module  
+**Oggetto Blender:** `EP08_LFSR_x4_x3_1`  
+**Audio:** kick 4/4 · rim sui bit di un LFSR a 4 bit x⁴+x³+1 (periodo 15) · nell'ultima frase x⁴+x²+1 (periodo 6)
 
-**Equazione:** period = lcm(2,3,5) = 30
+**Formule a schermo:**
+- sₙ₊₄ = sₙ₊₃ ⊕ sₙ   ⇔   x⁴ + x³ + 1 over GF(2)
+- primitive ⇒ period 2^m − 1  ·  (x²+x+1)² ⇒ period 6
 
-**VO (it):** Tre divisori, uno XOR, un pattern da trenta step. Un divisore manda un
-impulso ogni n clock: due, tre, cinque. Il periodo della combinazione è il minimo comune
-multiplo, trenta. AND: un colpo su trenta. OR: ventidue. XOR: sedici, dispari, sbilenco,
-vivo. Solo tre e cinque in XOR: quattordici colpi su quindici con un buco solo, una hat
-che zoppica una volta. Sono tre contatori e una tabella di verità. Dodici righe di gen~.
+**Le 4 frasi (7.5 s ciascuna):**
+1. A 4-bit shift register with feedback s[n+4] = s[n+3] ⊕ s[n]: the "Turing Machine" module, written in GF(2).
+2. x⁴ + x³ + 1 is primitive over GF(2): the sequence has maximal period 2⁴ − 1 = 15, visiting every non-zero state exactly once.
+3. 15 against a 16-step bar: the pattern slides one step per bar and closes after lcm(15,16) = 240 steps = 15 bars. Polyrhythm from a polynomial.
+4. Flip one tap to x⁴ + x² + 1 = (x² + x + 1)²: not primitive, the period collapses to 6. The polynomial is the groove.
+
+**VO (it, ~25 s):** Un registro a scorrimento a quattro bit con retroazione s di n più quattro uguale s di n più tre xor s di n: il modulo Turing Machine, scritto in GF due. x alla quarta più x al cubo più uno è primitivo: periodo massimo due alla quattro meno uno, quindici, ogni stato non nullo una volta sola. Quindici contro una battuta da sedici: il pattern scivola di uno step a battuta e si richiude dopo quindici battute. Cambia un tap, x alla quarta più x quadro più uno: non è primitivo, il periodo crolla a sei. Il polinomio è il groove.
 
 **Caption:**
-Three clock dividers. One XOR. A 30-step pattern.
-Period = lcm(2,3,5) = 30. AND → 1 hit. OR → 22 hits. XOR → 16 hits, lopsided, alive.
-XOR of /3 and /5 alone: 14 hits in 15 with a single hole — a rolling hat that limps once.
-Swap /5 for /7 → period 42 (2.6 bars). The fill writes itself.
-Max: [counter]×3 → [% n] → [== 0] → [expr $i1 ^ $i2 ^ $i3]. Send it to a 909 rim.
-EP.08 / 12 — MATH × TECHNO
-#clockdivider #modularsynth #maxforlive #hypnotictechno #eurorack #musicmath
-#generativemusic #technoproducer #booleanlogic #sequencer
+A 4-bit shift register with feedback s[n+4] = s[n+3] ⊕ s[n] — the Turing Machine module, written in GF(2). x⁴ + x³ + 1 is primitive: maximal period 2⁴ − 1 = 15, every non-zero state once. 15 against a 16-step bar slides one step per bar and closes after lcm(15,16) = 240 steps. Flip one tap to x⁴ + x² + 1 = (x² + x + 1)²: not primitive, period 6. The polynomial is the groove.
+EP.08 / 12
+#lfsr #galoisfield #turingmachine #modularsynth #eurorack #hypnotictechno #musicmath #generativemusic #technoproducer #blender3d
 
 ---
 
-## EP09 · swing ms — `EP09-swing-ms.mp4`
+## EP09 · SWING IN MILLISECONDS — `EP09-swing-ms.mp4`
 
-**A schermo (4 frasi × 7.5 s):**
-1. 54 % swing is *9.2 ms*. — _8th @130 = 230.77 ms · straight 16th = 115.38 ms_
-2. 58 % is *18.5 ms*. 62 % is 27.7. — _the off-16th slides inside the 8th_
-3. You stop hearing it below *10 ms*. — _felt, not heard_
-4. Hats at 54. Kick at *50*. — _the gap is the groove_
+**Tag a schermo:** Δt = (s − ½)·T₈ · Weber–Fechner · JND · lane asynchrony  
+**Oggetto Blender:** `EP09_groove_lanes`  
+**Audio:** kick dritta 4/4 · hat a sedicesimi con swing 50 → 54 → 58 → 62 → 54 %
 
-**Equazione:** delay = (swing − 0.5) × 8th_ms
+**Formule a schermo:**
+- Δt = (s − ½)·T₈   ·   T₈ = 30/BPM s
+- Weber: ΔT/T ≈ const ≈ 0.025   ⇒   JND₁₆ ≈ 5.8 ms @130
 
-**VO (it):** Cinquantaquattro per cento di swing sono 9,2 millisecondi. Un ottavo a 130
-dura 230,77 millisecondi; un sedicesimo dritto 115,38. Lo swing MPC dice dove sta il
-sedicesimo in levare dentro l'ottavo: cinquanta è il centro. Cinquantaquattro: più nove
-virgola due. Cinquantotto: diciotto e mezzo. La soglia di udibilità del timing è circa dieci
-millisecondi: il cinquantaquattro si sente ma non si ascolta. Regola techno: hat a
-cinquantaquattro-cinquantasei, kick a cinquanta. Il gap è il groove.
+**Le 4 frasi (7.5 s ciascuna):**
+1. Δt = (s − ½)·T₈. At 130 BPM T₈ = 230.77 ms: 54 % → +9.23 ms, 58 % → +18.46 ms, 62 % → +27.69 ms. MPC swing, decoded.
+2. Weber–Fechner: the just-noticeable timing difference is ≈ 2.5 % of the interval, ≈ 5.8 ms on a 16th. 54 % is above threshold and below awareness.
+3. Swing in % is tempo-relative; in ms it is not. 54 % at 140 BPM is 8.57 ms — the same setting is 7 % tighter. Think in milliseconds.
+4. Kick at 50 %, hats at 54–56 %: the asynchrony between lanes is the groove, not the swing value. One lane swung alone is just late.
+
+**VO (it, ~25 s):** Delta t uguale s meno un mezzo per T otto. A centotrenta l'ottavo dura duecentotrenta virgola settantasette millisecondi: cinquantaquattro per cento sono più nove virgola ventitré, cinquantotto più diciotto e quarantasei, sessantadue più ventisette e sessantanove. Weber-Fechner: la differenza di timing appena percepibile è circa il due e mezzo per cento dell'intervallo, cinque virgola otto millisecondi su un sedicesimo. Il cinquantaquattro sta sopra la soglia e sotto la coscienza. Lo swing in percentuale è relativo al tempo, in millisecondi no: a centoquaranta lo stesso cinquantaquattro è il sette per cento più stretto. Cassa a cinquanta, hat a cinquantaquattro: l'asincronia tra le corsie è il groove.
 
 **Caption:**
-54 % swing is 9.2 ms.
-8th @130 = 230.77 ms. MPC swing % = where the off-16th sits inside the 8th.
-delay = (swing − 0.5) × 230.77 → 54 % = +9.2 ms · 58 % = +18.5 · 62 % = +27.7 ms.
-Timing JND ≈ 10 ms: 54 % is felt, not heard. At 140 BPM the same 54 % is only 8.6 ms —
-swing in % is tempo-relative, in ms it is not.
-Techno rule: hats 54–56 %, kick 50 %. The gap is the groove.
-EP.09 / 12 — MATH × TECHNO
-#swing #groove #mpc #hypnotictechno #ableton #musicmath #drumprogramming
-#technoproducer #producertips #timing
+Δt = (s − ½)·T₈. At 130 BPM T₈ = 230.77 ms: 54 % → +9.23 ms, 58 % → +18.46, 62 % → +27.69. Weber–Fechner: the JND for timing is ≈ 2.5 % of the interval ≈ 5.8 ms on a 16th — 54 % is above threshold, below awareness. Swing in % is tempo-relative, in ms it is not: 54 % at 140 BPM is 8.57 ms, 7 % tighter. Kick at 50, hats at 54–56: the asynchrony between lanes is the groove.
+EP.09 / 12
+#swing #groove #weberfechner #mpc #drumprogramming #hypnotictechno #musicmath #ableton #technoproducer #blender3d
 
 ---
 
-## EP10 · fourier — `EP10-fourier.mp4`
+## EP10 · FOURIER & THE CLICK — `EP10-fourier.mp4`
 
-**A schermo (4 frasi × 7.5 s):**
-1. A square wave is an infinite *sum*. — _odd harmonics only · amplitude 1/n_
-2. Fifteen harmonics. The corners *ring*. — _Gibbs overshoot 8.9 % · it never goes away_
-3. A click is *every* frequency at once. — _impulse → flat spectrum_
-4. Punch is *bandwidth*, not level. — _shorten the transient. don't EQ it._
+**Tag a schermo:** partial sums · Gibbs 8.949 % · δ(t) · Gabor uncertainty  
+**Oggetto Blender:** `EP10_partial_sums`  
+**Audio:** quadra su La2 costruita per somme parziali (1 → 15 armoniche) · dalla terza frase click a larga banda + kick
 
-**Equazione:** square(x) = 4/π · Σ sin((2k+1)x)/(2k+1)
+**Formule a schermo:**
+- sq(x) = (4/π)·Σₖ sin((2k+1)x)/(2k+1)
+- overshoot = (2/π)·Si(π) − 1 = 0.08949   ·   σt·σf ≥ 1/(4π)
 
-**VO (it):** Un'onda quadra è una somma infinita: solo armoniche dispari, ampiezza uno
-su n. Ne sommi quindici e gli angoli squillano: overshoot di Gibbs, otto virgola nove per
-cento, non se ne va mai. Caso limite: un impulso, un click, è tutte le frequenze insieme a
-pari ampiezza. Quindi il transiente di un campione sul tuo kick è l'unica cosa nel mix che
-colpisce tutte le bande. Il punch è larghezza di banda, non livello. Non equalizzarlo:
-accorcialo.
+**Le 4 frasi (7.5 s ciascuna):**
+1. Square wave = 4/π·Σ sin((2k+1)x)/(2k+1): odd harmonics with amplitude 1/n. Each ribbon behind adds one more term.
+2. Near the jump every partial sum overshoots by (2/π)·Si(π) − 1 = 8.949 %, for any finite N. Gibbs (1899): more harmonics narrow it, never remove it.
+3. Limit case δ(t): flat spectrum, zero phase. Gabor: Δt·Δf ≥ 1/(4π). A click of σ = 1 ms spans σf ≥ 79.6 Hz — the only sound that hits every band.
+4. Punch is bandwidth, not level: halve the transient length and the spectrum doubles in width. Don't EQ the click — shorten it.
+
+**VO (it, ~25 s):** Un'onda quadra è quattro su pi greco per la somma dei seni delle armoniche dispari su n. Vicino al salto ogni somma parziale sbaglia per eccesso di due su pi greco per seno integrale di pi greco meno uno: otto virgola novecentoquarantanove per cento, per qualsiasi N finito. Gibbs, 1899: più armoniche lo restringono, non lo tolgono. Il caso limite è la delta: spettro piatto, fase zero. Gabor: sigma t per sigma f maggiore o uguale a uno su quattro pi greco. Un click di un millisecondo copre almeno ottanta hertz di larghezza. Il punch è banda, non livello: dimezza il transiente e lo spettro raddoppia. Non equalizzarlo, accorcialo.
 
 **Caption:**
-A square wave is an infinite sum.
-Odd harmonics only, amplitude 1/n. Add 15 and the corners ring — Gibbs overshoot, 8.9 %,
-forever. The limit case: an impulse (a click) = every frequency, equal amplitude.
-A 1-sample transient on your kick is the only thing in the mix hitting all bands at once.
-Punch is bandwidth, not level. Don't EQ it — shorten it.
-Layer a 1–3 ms broadband click at −12 dB, take 2 dB off the body.
-EP.10 / 12 — MATH × TECHNO
-#fourier #sounddesign #kickdrum #hypnotictechno #synthesis #musicmath #mixingtips
-#technoproducer #dsp #transient
+Square wave = (4/π)·Σ sin((2k+1)x)/(2k+1). Near the jump every partial sum overshoots by (2/π)·Si(π) − 1 = 8.949 % for any finite N — Gibbs (1899). Limit case δ(t): flat spectrum, zero phase. Gabor: σt·σf ≥ 1/(4π), so a 1 ms click spans ≥ 79.6 Hz — the only sound that hits every band. Punch is bandwidth, not level: halve the transient and the spectrum doubles. Shorten the click, don't EQ it.
+EP.10 / 12
+#fourier #gibbsphenomenon #dsp #transient #kickdrum #hypnotictechno #sounddesign #musicmath #technoproducer #blender3d
 
 ---
 
-## EP11 · chaos — `EP11-chaos.mp4`
+## EP11 · THE LOGISTIC MAP — `EP11-logistic.mp4`
 
-**A schermo (4 frasi × 7.5 s):**
-1. One line of code. Infinite *sequencer*. — _the logistic map · r between 2.8 and 4_
-2. r = 3.2 → two notes. r = 3.5 → *four*. — _period doubling · faster and faster_
-3. r = 3.5699 → *chaos*. — _deterministic · repeatable · never periodic_
-4. Map r to a *fader*. That fader is the track. — _gen~: History x; x = r*x*(1-x); out = floor(x*16)_
+**Tag a schermo:** period doubling · Feigenbaum δ, α · Lyapunov exponent · gen~  
+**Oggetto Blender:** `EP11_logistic_cloud`  
+**Audio:** sequencer a 16 note (dorico) pilotato dalla mappa logistica: r 2.9 → 3.2 → 3.5 → 3.5699 → 3.7 → 4 → sweep · kick 4/4
 
-**Equazione:** x[n+1] = r · x[n] · (1 − x[n])
+**Formule a schermo:**
+- xₙ₊₁ = r xₙ(1 − xₙ)   ·   λ = lim (1/N)·Σ ln|r(1 − 2xₙ)|
+- δ = lim (rₙ − rₙ₋₁)/(rₙ₊₁ − rₙ) = 4.6692…   ·   λ(r=4) = ln 2
 
-**VO (it):** Una riga di codice, un sequencer infinito: la mappa logistica. r sotto tre
-si ferma su un valore, una nota sola. Tre virgola due: periodo due. Tre e mezzo: periodo
-quattro. Tre virgola cinque sei: otto. Raddoppia sempre più in fretta e a 3,5699 esplode
-nel caos: deterministico, ripetibile con lo stesso seme, mai periodico. A 3,83 una finestra
-di periodo tre, la zona terzinata. Mappa x su una scala di sedici note e r su un fader del
-K2: quel fader è tutta la traccia.
+**Le 4 frasi (7.5 s ciascuna):**
+1. xₙ₊₁ = r·xₙ(1 − xₙ). Below r = 3 one fixed point. Then period 2, 4, 8 … at r = 3, 3.4495, 3.5441, 3.5644 — doubling faster and faster.
+2. The bifurcation intervals shrink by δ = 4.6692… — Feigenbaum's constant, universal for every unimodal map. Accumulation at r∞ = 3.56995: chaos.
+3. Lyapunov exponent λ = ⟨ln|r(1 − 2x)|⟩ > 0 is the definition of chaos. At r = 4, λ = ln 2: exactly one bit of unpredictability per step.
+4. Quantise x to 16 notes and map r to a fader (2.9 → 3.99): one parameter sweeps from a loop to a melody to noise. gen~: History x; x = rx(1-x).
+
+**VO (it, ~25 s):** x di n più uno uguale r x di n per uno meno x di n. Sotto r uguale tre un punto fisso; poi periodo due, quattro, otto a tre, tre virgola quattrocentoquarantanove, tre virgola cinquecentoquarantaquattro. Gli intervalli si restringono di delta uguale quattro virgola sei sei nove due, la costante di Feigenbaum, universale per ogni mappa unimodale. Accumulazione a tre virgola cinque sei nove nove cinque: caos. L'esponente di Lyapunov positivo è la definizione di caos; a r uguale quattro vale logaritmo di due, un bit di imprevedibilità per step. Quantizza x su sedici note e metti r su un fader: un parametro, da loop a melodia a rumore.
 
 **Caption:**
-One line of code. Infinite sequencer.
-x[n+1] = r·x·(1−x). r < 3 → one note. 3.2 → period 2. 3.5 → period 4. 3.56 → period 8.
-3.5699… → chaos: deterministic, repeatable with the same seed, never periodic.
-3.83 → a period-3 window inside the chaos (the "triplet" zone). Feigenbaum δ = 4.669.
-gen~: History x; x = r*x*(1-x); out = floor(x*16). Map r to a fader, 2.9 → 3.99.
-EP.11 / 12 — MATH × TECHNO
-#chaostheory #generativemusic #maxforlive #gen #hypnotictechno #musicmath
-#sequencer #technoproducer #idm #algorithmicmusic
+x[n+1] = r·x(1−x). Below r = 3 a fixed point; then period 2, 4, 8 at r = 3, 3.4495, 3.5441 — intervals shrinking by Feigenbaum's δ = 4.6692…, universal for every unimodal map. Accumulation at r∞ = 3.56995: chaos. Lyapunov λ = ⟨ln|r(1−2x)|⟩ > 0 is the definition; at r = 4, λ = ln 2 = one bit of unpredictability per step. Quantise x to 16 notes, map r to a fader: loop → melody → noise.
+gen~: History x; x = r*x*(1-x); out = floor(x*16).
+EP.11 / 12
+#logisticmap #chaostheory #feigenbaum #lyapunov #maxforlive #gen #generativemusic #hypnotictechno #musicmath #blender3d
 
 ---
 
-## EP12 · risset — `EP12-risset.mp4`
+## EP12 · RISSET RHYTHM — `EP12-risset.mp4`
 
-**A schermo (4 frasi × 7.5 s):**
-1. A beat that accelerates *forever*. — _the same loop at ×1, ×2, ×4_
-2. Every eight bars the tempo *doubles*. — _and the next layer takes over, at the tempo you started from_
-3. You hear acceleration. The mean tempo *never moves*. — _a Shepard tone, for rhythm_
-4. The crowd never *lands*. — _3 clips · ×1 ×2 ×4 · Hann gain windows offset by 1/3_
+**Tag a schermo:** τ₀·2^(t/T) · Shepard helix · Hann gains · constant mean log-tempo  
+**Oggetto Blender:** `EP12_shepard_helix`  
+**Audio:** tre layer di kick a ×1 ×2 ×4 con guadagni Hann su log-tempo, T = 7.5 s: accelerazione infinita (ritmo di Risset)
 
-**Equazione:** tempo(t) = T₀ · 2^(t/T)
+**Formule a schermo:**
+- τₖ(t) = τ₀·2^(t/T + k)   ·   gₖ(t) = ½[1 − cos(2π(t/T + k)/3)]
+- Σₖ gₖ = const   ·   state(t + T) = state(t) · shift(k)
 
-**VO (it):** Un beat che accelera per sempre: il ritmo di Risset, lo Shepard tone del
-tempo. Lo stesso loop a uno, due e quattro volte la velocità; ogni layer entra dal silenzio
-e torna al silenzio. Ogni T secondi il tempo raddoppia, ma il layer a doppia velocità che
-era piano ora è quello forte, esattamente al tempo da cui eri partito. Il cervello segue il
-più forte: sente accelerare. Il tempo medio non cambia mai. Otto battute, poi loop
-perfetto. Il pubblico non atterra mai.
+**Le 4 frasi (7.5 s ciascuna):**
+1. τ(t) = τ₀·2^(t/T): tempo rising exponentially, three layers an octave apart in tempo, gains on a raised cosine over log τ.
+2. After T the tempo has doubled, but layer k+1 now carries exactly the amplitude layer k had — at τ₀. The state is periodic, the percept is not.
+3. Shepard (1964) for pitch, Risset (1971) for rhythm: a circular dimension built from a log scale and a bell-shaped envelope. The helix is the geometry of the illusion.
+4. T = 8 bars = 14.77 s. Three clips at ×1, ×2, ×4 with Hann gains offset by T/3. The mean log-tempo is constant: the floor never lands.
+
+**VO (it, ~25 s):** Tau di t uguale tau zero per due alla t su T: il tempo sale esponenzialmente. Tre layer a distanza di un'ottava di tempo, guadagni a coseno rialzato sul logaritmo del tempo. Dopo T il tempo è raddoppiato, ma il layer successivo ha esattamente l'ampiezza che aveva il precedente, al tempo di partenza. Lo stato è periodico, la percezione no. Shepard nel sessantaquattro per l'altezza, Risset nel settantuno per il ritmo: una dimensione circolare costruita da una scala logaritmica e un inviluppo a campana. T uguale otto battute. Tre clip a uno, due, quattro con finestre di Hann sfalsate di T su tre. Il pavimento non arriva mai.
 
 **Caption:**
-A beat that accelerates forever.
-Risset rhythm: the same loop at ×1, ×2, ×4, each layer fading in from silence and out
-again on a raised-cosine over log-tempo. tempo(t) = T₀·2^(t/T): every T the tempo doubles,
-but the ×2 layer that was quiet is now the loud one — at exactly the tempo you started from.
-The brain follows the loudest layer and hears acceleration. The mean tempo never moves.
-Ableton: 3 clip copies, warp ×1/×2/×4, Hann gain windows offset by 1/3, 8-bar cycle.
-EP.12 / 12 — MATH × TECHNO
-#rissetrhythm #shepardtone #psychoacoustics #hypnotictechno #ableton #musicmath
-#sounddesign #technoproducer #livetechno #illusion
+τ(t) = τ₀·2^(t/T): tempo rising exponentially, three layers an octave apart in tempo, gains on a raised cosine over log τ. After T the tempo has doubled but layer k+1 carries exactly the amplitude layer k had — at τ₀. The state is periodic, the percept is not. Shepard (1964) for pitch, Risset (1971) for rhythm. T = 8 bars = 14.77 s, three clips at ×1 ×2 ×4, Hann gains offset by T/3. The floor never lands.
+EP.12 / 12
+#rissetrhythm #shepardtone #auditoryillusion #psychoacoustics #hypnotictechno #ableton #musicmath #sounddesign #technoproducer #blender3d
 
 ---
 
 ## Note di pubblicazione
 
-- **Audio.** I file sono muti di proposito: Instagram comprime e il loop sotto deve essere
-  tuo (branding sonoro). Idealmente il loop dimostra l'episodio: EP01 hat euclidee,
-  EP03 sub con il beating a 2 battute, EP09 hat a 54 %, EP12 un vero Risset.
-- **Cover.** Il frame a t ≈ 3 s (prima frase completa) è la cover migliore; `node render.js --stills`
-  salva i 4 fotogrammi chiave di ogni reel in `out/stills/`.
-- **Serie.** Pubblicare in ordine, 2–3 a settimana, stesso giorno/ora. Le 4 frasi a schermo
-  sono il riassunto; la caption qui sopra porta il dettaglio e la CTA.
-- **Commenti.** I numeri sono verificabili e il pubblico che li verifica è quello che vuoi.
-  Rispondi con numeri.
-- **Varianti rapide.** Cambiare `BPM` in `reels.js` ricalcola tutti i ms/Hz a schermo
-  (le didascalie qui sopra sono a 130 e vanno riscritte a mano).
+- **Cover.** Il frame a t ≈ 3 s. `node render.js --stills` salva 4 fotogrammi chiave per episodio in `out/stills/`.
+- **Ordine.** 01 → 12, 2–3 a settimana. Le frasi a schermo sono dense di proposito: il reel si riguarda.
+- **Audio.** `python3 synth.py` rigenera i WAV; `node render.js` renderizza i video muti; il mux è in `render.js` (`--mux`) o a mano con ffmpeg.
+- **Track/label.** Il campo `obj` nell'overlay del viewport è il nome del file .blend; se il reel gira sopra un tuo pezzo edito, metti il titolo lì (es. `Stelle_EP_kick`).
+- **Commenti.** I numeri sono verificabili e citati (Bjorklund 2003, Gibbs 1899, Shepard 1964, Risset 1971, Hurwitz, Steinhaus, Feigenbaum). Chi li verifica è il pubblico giusto.

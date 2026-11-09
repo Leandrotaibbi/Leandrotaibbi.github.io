@@ -5,23 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MATH × TECHNO — Reels engine</title>
 <style>
-@font-face{font-family:'Syne';src:url(fonts/Syne.woff2) format('woff2');font-weight:400 800}
-@font-face{font-family:'Archivo';src:url(fonts/Archivo.woff2) format('woff2');font-weight:100 900}
-@font-face{font-family:'Plex';src:url(fonts/PlexMono-400.woff2) format('woff2');font-weight:400}
-@font-face{font-family:'Plex';src:url(fonts/PlexMono-500.woff2) format('woff2');font-weight:500}
-@font-face{font-family:'Plex';src:url(fonts/PlexMono-600.woff2) format('woff2');font-weight:600}
-html,body{margin:0;background:#070809;color:#ecead9;font-family:'Plex',monospace;height:100%}
+@font-face{font-family:'STIX';src:url(fonts/STIXTwo.woff2) format('woff2');font-weight:400 700;font-style:normal}
+@font-face{font-family:'STIX';src:url(fonts/STIXTwo-Italic.woff2) format('woff2');font-weight:400;font-style:italic}
+@font-face{font-family:'VT323';src:url(fonts/VT323.woff2) format('woff2')}
+@font-face{font-family:'ShareTech';src:url(fonts/ShareTechMono.woff2) format('woff2')}
+html,body{margin:0;background:#141414;color:#e6e6e6;font-family:'ShareTech',monospace;height:100%}
 body{display:flex;flex-direction:column;align-items:center;gap:12px;padding:14px;box-sizing:border-box}
-canvas{display:block;background:#070809}
+canvas{display:block;background:#141414}
 body.render{padding:0;gap:0;display:block}
 body.render canvas{width:1080px;height:1920px}
 body:not(.render) canvas{height:calc(100vh - 110px);width:auto;max-width:100%;box-shadow:0 0 0 1px #232a30}
 #bar{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
 #bar button{background:#111417;color:#8b938d;border:1px solid #232a30;padding:6px 10px;font:inherit;cursor:pointer}
-#bar button.on{color:#e8763c;border-color:#e8763c}
+#bar button.on{color:#ffe600;border-color:#ffe600}
 #bar button:hover{color:#ecead9}
 #tl{width:min(100%,1080px);height:4px;background:#232a30;cursor:pointer;position:relative}
-#tl i{position:absolute;left:0;top:0;bottom:0;background:#e8763c}
+#tl i{position:absolute;left:0;top:0;bottom:0;background:#ffe600}
 body.render #bar,body.render #tl{display:none}
 </style>
 </head>
@@ -36,8 +35,8 @@ body.render #bar,body.render #tl{display:none}
   const RENDER = q.has('render');
   if (RENDER) document.body.classList.add('render');
   await Promise.all([
-    document.fonts.load('800 100px Syne'), document.fonts.load('300 100px Archivo'), document.fonts.load('700 100px Archivo'),
-    document.fonts.load('400 100px Plex'), document.fonts.load('500 100px Plex'), document.fonts.load('600 100px Plex')
+    document.fonts.load('400 100px STIX'), document.fonts.load('700 100px STIX'), document.fonts.load('italic 400 100px STIX'),
+    document.fonts.load('400 100px VT323'), document.fonts.load('400 100px ShareTech')
   ]);
   const cv = document.getElementById('c'), ctx = cv.getContext('2d');
   let idx = Math.max(0, Math.min(REELS.length - 1, (parseInt(q.get('reel') || '1', 10) || 1) - 1));

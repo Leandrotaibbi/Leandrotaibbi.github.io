@@ -1,16 +1,28 @@
 /* Render reels to MP4 (1080×1920, 30 fps, 30 s) with Playwright + ffmpeg.
    usage:  node render.js                 → all 12 → out/EP01-euclid.mp4 …
            node render.js 3 7             → only reels 3 and 7
-           node render.js --stills        → 5 JPEG key-frames per reel in out/stills (fast review) */
+           node render.js --stills        → 4 JPEG key-frames per reel in out/stills (fast review)
+           node render.js --mux           → mux out/audio/EPnn.wav into the rendered MP4s (AAC 192k) */
 const { chromium } = require('playwright');
 const { spawn } = require('child_process');
 const fs = require('fs'), path = require('path');
 
 const FPS = 30, DUR = 30, W = 1080, H = 1920;
 const args = process.argv.slice(2);
-const STILLS = args.includes('--stills');
+const STILLS = args.includes('--stills'), MUX = args.includes('--mux');
 const wanted = args.filter(a => /^\d+$/.test(a)).map(Number);
 const OUT = path.join(__dirname, 'out'); fs.mkdirSync(OUT, { recursive: true });
+
+if (MUX) {
+  const { execFileSync } = require('child_process');
+  for (const f of fs.readdirSync(OUT).filter(f => /^EP\d\d-.*\.mp4$/.test(f))) {
+    const n = f.slice(0, 4); const wav = path.join(OUT, 'audio', n + '.wav'); if (!fs.existsSync(wav)) { console.log('no audio for', f); continue; }
+    const tmp = path.join(OUT, '_' + f);
+    execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', path.join(OUT, f), '-i', wav, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', tmp]);
+    fs.renameSync(tmp, path.join(OUT, f)); console.log('muxed', f, (fs.statSync(path.join(OUT, f)).size / 1e6).toFixed(1) + ' MB');
+  }
+  process.exit(0);
+}
 
 (async () => {
   const browser = await chromium.launch();
