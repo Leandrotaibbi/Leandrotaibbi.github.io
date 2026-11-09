@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MATH × TECHNO — Reels engine</title>
+<style>
+@font-face{font-family:'Syne';src:url(fonts/Syne.woff2) format('woff2');font-weight:400 800}
+@font-face{font-family:'Plex';src:url(fonts/PlexMono-400.woff2) format('woff2');font-weight:400}
+@font-face{font-family:'Plex';src:url(fonts/PlexMono-500.woff2) format('woff2');font-weight:500}
+@font-face{font-family:'Plex';src:url(fonts/PlexMono-600.woff2) format('woff2');font-weight:600}
+html,body{margin:0;background:#070809;color:#ecead9;font-family:'Plex',monospace;height:100%}
+body{display:flex;flex-direction:column;align-items:center;gap:12px;padding:14px;box-sizing:border-box}
+canvas{display:block;background:#070809}
+body.render{padding:0;gap:0;display:block}
+body.render canvas{width:1080px;height:1920px}
+body:not(.render) canvas{height:calc(100vh - 110px);width:auto;max-width:100%;box-shadow:0 0 0 1px #232a30}
+#bar{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+#bar button{background:#111417;color:#8b938d;border:1px solid #232a30;padding:6px 10px;font:inherit;cursor:pointer}
+#bar button.on{color:#e8763c;border-color:#e8763c}
+#bar button:hover{color:#ecead9}
+#tl{width:min(100%,1080px);height:4px;background:#232a30;cursor:pointer;position:relative}
+#tl i{position:absolute;left:0;top:0;bottom:0;background:#e8763c}
+body.render #bar,body.render #tl{display:none}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<canvas id="c" width="1080" height="1920"></canvas>
+<div id="tl"><i></i></div>
+<script src="reels.js"></script>
+<script>
+(async () => {
+  const q = new URLSearchParams(location.search);
+  const RENDER = q.has('render');
+  if (RENDER) document.body.classList.add('render');
+  await Promise.all([
+    document.fonts.load('800 100px Syne'), document.fonts.load('700 100px Syne'),
+    document.fonts.load('400 100px Plex'), document.fonts.load('500 100px Plex'), document.fonts.load('600 100px Plex')
+  ]);
+  const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+  let idx = Math.max(0, Math.min(REELS.length - 1, (parseInt(q.get('reel') || '1', 10) || 1) - 1));
+  let t0 = performance.now(), paused = false, pauseT = 0;
+
+  const bar = document.getElementById('bar');
+  REELS.forEach((r, i) => {
+    const b = document.createElement('button');
+    b.textContent = String(i + 1).padStart(2, '0') + ' ' + r.short;
+    b.onclick = () => { idx = i; t0 = performance.now(); paused = false; mark(); };
+    bar.appendChild(b);
+  });
+  function mark(){ [...bar.children].forEach((b, i) => b.classList.toggle('on', i === idx)); }
+  mark();
+  const tl = document.getElementById('tl');
+  tl.onclick = e => { const f = (e.clientX - tl.getBoundingClientRect().left) / tl.offsetWidth; t0 = performance.now() - f * DUR * 1000; };
+  addEventListener('keydown', e => {
+    if (e.code === 'Space') { paused = !paused; if (paused) pauseT = performance.now(); else t0 += performance.now() - pauseT; }
+    if (e.code === 'ArrowRight') { idx = (idx + 1) % REELS.length; t0 = performance.now(); mark(); }
+    if (e.code === 'ArrowLeft') { idx = (idx + REELS.length - 1) % REELS.length; t0 = performance.now(); mark(); }
+  });
+
+  window.__seek = (i, t) => { renderFrame(ctx, REELS[i], t); };
+  window.__ready = true;
+  if (RENDER) return;
+
+  (function loop(){
+    const now = paused ? pauseT : performance.now();
+    const t = ((now - t0) / 1000) % DUR;
+    renderFrame(ctx, REELS[idx], t);
+    tl.firstElementChild.style.width = (t / DUR * 100) + '%';
+    requestAnimationFrame(loop);
+  })();
+})();
+</script>
+</body>
+</html>
