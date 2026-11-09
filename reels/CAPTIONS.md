@@ -4,10 +4,25 @@ Serie "nerd": una equazione, un visual che È il fenomeno (non un'icona), una
 applicazione concreta in techno a 130 BPM, una CTA. Tutti i numeri sono calcolati
 (130 BPM → beat 461.54 ms · bar 1.846 s · 16th 115.38 ms · 8th 230.77 ms).
 
-Struttura fissa di ogni reel (così l'occhio impara il formato e resta):
+Struttura fissa di ogni reel (formato "lesson", come i riferimenti che mi hai mandato —
+così l'occhio impara il formato e resta):
 
-| t | blocco | cosa succede |
-|---|---|---|
+- **Header** in maiuscoletto mono: `LESSON: …` · `TRACK: LEANDRO TAIBBI – ID` · `130 BPM` ·
+  `UNRELEASED` + 4 pillole che indicano a che punto del reel sei. Track e label sono
+  campi (`track`, `label`) nell'oggetto del reel: quando il reel gira sopra un tuo pezzo
+  edito, mettici titolo ed etichetta vera (CommonSense / Diffuse Reality / Ithica…).
+- **Un solo visual grande** al centro, animato a 130 BPM, che È il fenomeno (il cerchio
+  euclideo con la testina, le due sinusoidi che battono davvero, la biforcazione che si
+  disegna). Pulsa leggermente su ogni kick.
+- **Una frase sola** (Archivo light) con **una parola in bold**, che cambia 4 volte: una
+  ogni 7.5 s. Sotto, una riga mono piccola con il numero.
+- **La formula** in fondo, sempre visibile. Handle e tagline nel footer.
+- 9 episodi scuri, 3 chiari (EP04, EP08, EP12) per alternare il registro.
+
+Niente schermata CTA finale: il reel finisce sulla quarta frase, come nei riferimenti.
+La CTA sta nella caption.
+
+---|---|---|
 | 0.0 – 2.8 s | HOOK | prompt da terminale + frase grande in Syne, ultima riga arancione |
 | 2.8 – 24.2 s | BODY | visual animato + 6 righe "console" che si scrivono una alla volta |
 | 24.2 – 27.6 s | APPLY IT | la mossa pratica (Ableton / Max for Live / hardware) |
@@ -24,7 +39,12 @@ del profilo.
 
 ## EP01 · euclid — `EP01-euclid.mp4`
 
-**Hook:** Your hi-hats are a theorem.
+**A schermo (4 frasi × 7.5 s):**
+1. Your hi-hats are a *theorem*. — _E(5,16) · five hits over sixteen steps_
+2. Spread 5 hits as *evenly* as integers allow. — _steps 0 · 4 · 7 · 10 · 13_
+3. Add E(7,16). They *share* three steps. — _tension without a fill_
+4. Rotate one step. *New groove.* Zero new notes. — _Max for Live: one expr object per voice_
+
 **Equazione:** hit(i) = ((i·k) mod n) < k
 
 **VO (it):** Le tue hi-hat sono un teorema. Euclide, trecento avanti Cristo.
@@ -47,7 +67,12 @@ EP.01 / 12 — MATH × TECHNO
 
 ## EP02 · lcm — `EP02-lcm.mp4`
 
-**Hook:** Two loops. One meets the other every 7 bars.
+**A schermo (4 frasi × 7.5 s):**
+1. Two loops. Sixteen steps against *seven*. — _kick every 4 · bleep every 7_
+2. They meet again after *112* steps. — _lcm(16,7) · seven bars_
+3. Every bar the bleep lands *somewhere else*. — _step 0 · 7 · 14 · 5 · 12 · 3 · 10_
+4. That drift is the *hypnosis*. No automation. — _Ableton: one clip in 7/16, the rest in 4/4_
+
 **Equazione:** lcm(16,7) = 112 steps = 7 bars
 
 **VO (it):** Un loop di kick su sedici step, un bleep su sette. Minimo comune multiplo:
@@ -70,7 +95,12 @@ EP.02 / 12 — MATH × TECHNO
 
 ## EP03 · beating — `EP03-beating.mp4`
 
-**Hook:** Detune is a tempo.
+**A schermo (4 frasi × 7.5 s):**
+1. Detune is a *tempo*. — _55.000 Hz against 55.300 Hz_
+2. Two sines become one that *breathes*. — _beat every 3.33 s · random · unmusical_
+3. Make it breathe every *two bars*. — _detune = 0.2708 Hz = +8.5 cents_
+4. A sidechain you never *programmed*. — _detune(Hz) = BPM / 60 / beats per cycle_
+
 **Equazione:** f_beat = |f₁ − f₂| · detune(Hz) = BPM / (60 · beats per cycle)
 
 **VO (it):** Il detune è un tempo. Due oscillatori vicini in pitch diventano un'unica
@@ -93,7 +123,12 @@ EP.03 / 12 — MATH × TECHNO
 
 ## EP04 · phi — `EP04-phi.mp4`
 
-**Hook:** The most irrational delay time.
+**A schermo (4 frasi × 7.5 s):**
+1. The most *irrational* delay time. — _φ = 1.6180339…  ·  1/φ = 0.618…_
+2. A 3/4-beat delay lands back on the *grid*. — _four repeats, then nothing new_
+3. A 1/φ-beat delay *never* lands on a 16th. — _0.618 · 1.236 · 1.854 · 2.472 beats_
+4. A cloud, not an *echo*. — _285 ms · feedback 60 % · the dub-techno trick_
+
 **Equazione:** φ = (1+√5)/2 · delay = beat_ms × 0.618
 
 **VO (it):** Il tempo di delay più irrazionale che esista. Phi è il numero più difficile
@@ -117,7 +152,12 @@ EP.04 / 12 — MATH × TECHNO
 
 ## EP05 · primes — `EP05-primes.mp4`
 
-**Hook:** Primes don't repeat. Neither should you.
+**A schermo (4 frasi × 7.5 s):**
+1. Primes don't *repeat*. — _three loops: 3 · 5 · 7 bars_
+2. Nothing lines up for *105* bars. — _3 minutes 14 seconds at 130 BPM_
+3. 4 · 8 · 16 repeats every *29 seconds*. — _you hear it. they hear it._
+4. The hypnosis is *arithmetic*. — _pad 3 bars · hats 5 · acid line 7 · follow actions off_
+
 **Equazione:** lcm(3,5,7) = 105 bars = 193.8 s = 3:14 @130
 
 **VO (it):** I primi non si ripetono, e nemmeno tu dovresti. Tre layer che loopano a
@@ -141,7 +181,12 @@ EP.05 / 12 — MATH × TECHNO
 
 ## EP06 · kick hz — `EP06-kick-hz.mp4`
 
-**Hook:** Your kick has a note. Find it.
+**A schermo (4 frasi × 7.5 s):**
+1. Your kick has a *note*. — _the body settles at 49.0 Hz → G1_
+2. Bass at A1. Kick at G1. *6 Hz* of mud. — _55.0 − 49.0 = 6.0 Hz beating in the low end_
+3. Tune the body to the *root*. — _A1 55.0 Hz · or a fifth below: D1 36.7 Hz_
+4. One semitone down here is *2.9 Hz*. — _the analyser can't see it. the sub can._
+
 **Equazione:** f(n) = 440 · 2^(n/12)
 
 **VO (it):** Il tuo kick ha una nota: trovala. Temperamento equabile, una formula.
@@ -166,7 +211,12 @@ EP.06 / 12 — MATH × TECHNO
 
 ## EP07 · lfo hz — `EP07-lfo-hz.mp4`
 
-**Hook:** Free-running LFOs are not free.
+**A schermo (4 frasi × 7.5 s):**
+1. Free-running LFOs are *not free*. — _every rate at 130 BPM has a number_
+2. One bar is *0.5417 Hz*. — _2 bars 0.2708 · 4 bars 0.1354 · 8 bars 0.0677_
+3. Sixteen bars is *0.0339 Hz*. — _one filter sweep every 29.5 s_
+4. Type it into the *hardware*. — _tempo sync without a sync cable_
+
 **Equazione:** f = BPM / (60 · beats per cycle)
 
 **VO (it):** Gli LFO liberi non sono gratis. Ogni modulazione "random" a 130 ha un
@@ -190,7 +240,12 @@ EP.07 / 12 — MATH × TECHNO
 
 ## EP08 · xor clock — `EP08-xor-clock.mp4`
 
-**Hook:** Three dividers. One XOR. 30-step pattern.
+**A schermo (4 frasi × 7.5 s):**
+1. Three dividers. One *XOR*. — _a pulse every 2 · every 3 · every 5 clocks_
+2. The pattern repeats every *30* steps. — _lcm(2, 3, 5) · just under two bars_
+3. OR gives 22 hits. XOR gives *16*. — _odd · lopsided · alive_
+4. Three counters and a *truth table*. — _twelve lines of gen~ · send it to a 909 rim_
+
 **Equazione:** period = lcm(2,3,5) = 30
 
 **VO (it):** Tre divisori, uno XOR, un pattern da trenta step. Un divisore manda un
@@ -213,7 +268,12 @@ EP.08 / 12 — MATH × TECHNO
 
 ## EP09 · swing ms — `EP09-swing-ms.mp4`
 
-**Hook:** 54% swing is 9.2 ms.
+**A schermo (4 frasi × 7.5 s):**
+1. 54 % swing is *9.2 ms*. — _8th @130 = 230.77 ms · straight 16th = 115.38 ms_
+2. 58 % is *18.5 ms*. 62 % is 27.7. — _the off-16th slides inside the 8th_
+3. You stop hearing it below *10 ms*. — _felt, not heard_
+4. Hats at 54. Kick at *50*. — _the gap is the groove_
+
 **Equazione:** delay = (swing − 0.5) × 8th_ms
 
 **VO (it):** Cinquantaquattro per cento di swing sono 9,2 millisecondi. Un ottavo a 130
@@ -238,7 +298,12 @@ EP.09 / 12 — MATH × TECHNO
 
 ## EP10 · fourier — `EP10-fourier.mp4`
 
-**Hook:** A square wave is an infinite sum.
+**A schermo (4 frasi × 7.5 s):**
+1. A square wave is an infinite *sum*. — _odd harmonics only · amplitude 1/n_
+2. Fifteen harmonics. The corners *ring*. — _Gibbs overshoot 8.9 % · it never goes away_
+3. A click is *every* frequency at once. — _impulse → flat spectrum_
+4. Punch is *bandwidth*, not level. — _shorten the transient. don't EQ it._
+
 **Equazione:** square(x) = 4/π · Σ sin((2k+1)x)/(2k+1)
 
 **VO (it):** Un'onda quadra è una somma infinita: solo armoniche dispari, ampiezza uno
@@ -263,7 +328,12 @@ EP.10 / 12 — MATH × TECHNO
 
 ## EP11 · chaos — `EP11-chaos.mp4`
 
-**Hook:** One line of code. Infinite sequencer.
+**A schermo (4 frasi × 7.5 s):**
+1. One line of code. Infinite *sequencer*. — _the logistic map · r between 2.8 and 4_
+2. r = 3.2 → two notes. r = 3.5 → *four*. — _period doubling · faster and faster_
+3. r = 3.5699 → *chaos*. — _deterministic · repeatable · never periodic_
+4. Map r to a *fader*. That fader is the track. — _gen~: History x; x = r*x*(1-x); out = floor(x*16)_
+
 **Equazione:** x[n+1] = r · x[n] · (1 − x[n])
 
 **VO (it):** Una riga di codice, un sequencer infinito: la mappa logistica. r sotto tre
@@ -287,7 +357,12 @@ EP.11 / 12 — MATH × TECHNO
 
 ## EP12 · risset — `EP12-risset.mp4`
 
-**Hook:** A beat that accelerates forever.
+**A schermo (4 frasi × 7.5 s):**
+1. A beat that accelerates *forever*. — _the same loop at ×1, ×2, ×4_
+2. Every eight bars the tempo *doubles*. — _and the next layer takes over, at the tempo you started from_
+3. You hear acceleration. The mean tempo *never moves*. — _a Shepard tone, for rhythm_
+4. The crowd never *lands*. — _3 clips · ×1 ×2 ×4 · Hann gain windows offset by 1/3_
+
 **Equazione:** tempo(t) = T₀ · 2^(t/T)
 
 **VO (it):** Un beat che accelera per sempre: il ritmo di Risset, lo Shepard tone del
@@ -315,11 +390,11 @@ EP.12 / 12 — MATH × TECHNO
 - **Audio.** I file sono muti di proposito: Instagram comprime e il loop sotto deve essere
   tuo (branding sonoro). Idealmente il loop dimostra l'episodio: EP01 hat euclidee,
   EP03 sub con il beating a 2 battute, EP09 hat a 54 %, EP12 un vero Risset.
-- **Cover.** Il frame a t ≈ 1.6 s (hook completo) è la cover migliore; `node render.js --stills`
-  ne salva uno per reel in `out/stills/`.
-- **Serie.** Ogni CTA dice "next episode: …": pubblicare in ordine, 2–3 a settimana,
-  stesso giorno/ora. Dopo EP12 la CTA punta a EP01 → il loop si chiude.
-- **Commenti.** Il footer dice "argue in comments": i numeri sono verificabili, il
-  pubblico che li verifica è quello che vuoi. Rispondi con numeri.
+- **Cover.** Il frame a t ≈ 3 s (prima frase completa) è la cover migliore; `node render.js --stills`
+  salva i 4 fotogrammi chiave di ogni reel in `out/stills/`.
+- **Serie.** Pubblicare in ordine, 2–3 a settimana, stesso giorno/ora. Le 4 frasi a schermo
+  sono il riassunto; la caption qui sopra porta il dettaglio e la CTA.
+- **Commenti.** I numeri sono verificabili e il pubblico che li verifica è quello che vuoi.
+  Rispondi con numeri.
 - **Varianti rapide.** Cambiare `BPM` in `reels.js` ricalcola tutti i ms/Hz a schermo
   (le didascalie qui sopra sono a 130 e vanno riscritte a mano).

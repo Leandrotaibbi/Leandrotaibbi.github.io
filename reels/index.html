@@ -6,6 +6,7 @@
 <title>MATH × TECHNO — Reels engine</title>
 <style>
 @font-face{font-family:'Syne';src:url(fonts/Syne.woff2) format('woff2');font-weight:400 800}
+@font-face{font-family:'Archivo';src:url(fonts/Archivo.woff2) format('woff2');font-weight:100 900}
 @font-face{font-family:'Plex';src:url(fonts/PlexMono-400.woff2) format('woff2');font-weight:400}
 @font-face{font-family:'Plex';src:url(fonts/PlexMono-500.woff2) format('woff2');font-weight:500}
 @font-face{font-family:'Plex';src:url(fonts/PlexMono-600.woff2) format('woff2');font-weight:600}
@@ -35,7 +36,7 @@ body.render #bar,body.render #tl{display:none}
   const RENDER = q.has('render');
   if (RENDER) document.body.classList.add('render');
   await Promise.all([
-    document.fonts.load('800 100px Syne'), document.fonts.load('700 100px Syne'),
+    document.fonts.load('800 100px Syne'), document.fonts.load('300 100px Archivo'), document.fonts.load('700 100px Archivo'),
     document.fonts.load('400 100px Plex'), document.fonts.load('500 100px Plex'), document.fonts.load('600 100px Plex')
   ]);
   const cv = document.getElementById('c'), ctx = cv.getContext('2d');

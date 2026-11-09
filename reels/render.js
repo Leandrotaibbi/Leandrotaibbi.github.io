@@ -25,7 +25,7 @@ const OUT = path.join(__dirname, 'out'); fs.mkdirSync(OUT, { recursive: true });
     const name = `EP${String(n).padStart(2, '0')}-${slug}`;
     if (STILLS) {
       const dir = path.join(OUT, 'stills'); fs.mkdirSync(dir, { recursive: true });
-      for (const t of [1.6, 6, 14, 21, 25.5, 29]) {
+      for (const t of [3, 11, 18, 26]) {
         await page.evaluate(([i, t]) => window.__seek(i, t), [i, t]);
         await page.screenshot({ path: path.join(dir, `${name}_t${String(t).padStart(4, '0')}.jpg`), type: 'jpeg', quality: 80 });
       }
