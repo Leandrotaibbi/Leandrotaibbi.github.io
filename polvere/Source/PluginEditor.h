@@ -33,14 +33,63 @@ public:
 };
 
 //==============================================================================
+// Controlli con MIDI learn (tasto destro)
+using LearnCallback = std::function<void (const juce::String& paramId)>;
+
+void drawLearnBadge (juce::Graphics&, juce::Component&, juce::Rectangle<int> area);
+
+class LearnSlider : public juce::Slider
+{
+public:
+    void mouseDown (const juce::MouseEvent& e) override
+    {
+        if (e.mods.isPopupMenu() && onLearn) onLearn (paramId);
+        else Slider::mouseDown (e);
+    }
+    void mouseDrag (const juce::MouseEvent& e) override { if (! e.mods.isPopupMenu()) Slider::mouseDrag (e); }
+    void mouseUp (const juce::MouseEvent& e) override   { if (! e.mods.isPopupMenu()) Slider::mouseUp (e); }
+    juce::String paramId;
+    LearnCallback onLearn;
+};
+
+class LearnCombo : public juce::ComboBox
+{
+public:
+    void mouseDown (const juce::MouseEvent& e) override
+    {
+        if (e.mods.isPopupMenu() && onLearn) onLearn (paramId);
+        else ComboBox::mouseDown (e);
+    }
+    void mouseUp (const juce::MouseEvent& e) override { if (! e.mods.isPopupMenu()) ComboBox::mouseUp (e); }
+    juce::String paramId;
+    LearnCallback onLearn;
+};
+
+class LearnButton : public juce::TextButton
+{
+public:
+    explicit LearnButton (const juce::String& buttonText) : TextButton (buttonText) {}
+    void mouseDown (const juce::MouseEvent& e) override
+    {
+        if (e.mods.isPopupMenu() && onLearn && paramId.isNotEmpty()) onLearn (paramId);
+        else if (! e.mods.isPopupMenu()) TextButton::mouseDown (e);
+    }
+    void mouseUp (const juce::MouseEvent& e) override { if (! e.mods.isPopupMenu()) TextButton::mouseUp (e); }
+    void paintOverChildren (juce::Graphics& g) override { drawLearnBadge (g, *this, getLocalBounds()); }
+    juce::String paramId;
+    LearnCallback onLearn;
+};
+
+//==============================================================================
 class Knob : public juce::Component
 {
 public:
     Knob (juce::AudioProcessorValueTreeState& s, const juce::String& paramId, const juce::String& name, int modIndex = -1);
     void resized() override;
+    void paintOverChildren (juce::Graphics& g) override { drawLearnBadge (g, *this, slider.getBounds()); }
     void setMod (float normalised);
 
-    juce::Slider slider;
+    LearnSlider slider;
     juce::Label nameLabel, valueLabel;
     int modIndex;
 
@@ -56,9 +105,10 @@ class Choice : public juce::Component
 public:
     Choice (juce::AudioProcessorValueTreeState& s, const juce::String& paramId, const juce::String& name);
     void resized() override;
+    void paintOverChildren (juce::Graphics& g) override { drawLearnBadge (g, *this, box.getBounds()); }
 
     juce::Label nameLabel;
-    juce::ComboBox box;
+    LearnCombo box;
 
 private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> attachment;
@@ -84,6 +134,17 @@ private:
 
     PolvereProcessor& proc;
     std::vector<Particle> particles;
+};
+
+class PatternView : public juce::Component
+{
+public:
+    explicit PatternView (PolvereProcessor& p) : proc (p) {}
+    void paint (juce::Graphics&) override;
+    float flash = 0.0f;
+
+private:
+    PolvereProcessor& proc;
 };
 
 } // namespace polvere
@@ -118,34 +179,34 @@ private:
 
     void timerCallback() override;
     void changeListenerCallback (juce::ChangeBroadcaster*) override;
-    void layoutSection (Section&, juce::Rectangle<int> area);
-    Section& addSection (const juce::String& title, std::initializer_list<juce::Component*> cells, const juce::StringArray& params);
-    void dice (const juce::StringArray& ids, float amount = 1.0f);
-    void undo();
+    void layoutSection (Section&, juce::Rectangle<int> area, int knobW = 70);
+    Section& addSection (const juce::String& title, std::initializer_list<juce::Component*> cells,
+                         const juce::StringArray& params, bool withDice = true);
+    Section& section (const juce::String& title);
+    void showLearnMenu (const juce::String& paramId);
+    void setupButton (polvere::LearnButton& b, const juce::String& paramId);
     void openLoader();
+    float s_diceAmount() const;
     void updateStatus();
-    juce::StringArray allDiceable() const;
 
     PolvereProcessor& proc;
     polvere::LookAndFeel laf;
     polvere::GrainCloud cloud;
-    juce::MidiKeyboardComponent keyboard;
+    polvere::PatternView patternView;
 
     std::vector<std::unique_ptr<polvere::Knob>> knobs;
     std::vector<std::unique_ptr<polvere::Choice>> choices;
     std::vector<std::unique_ptr<Section>> sections;
 
-    juce::TextButton loadButton { "LOAD" }, clearButton { "CLEAR" }, diceAllButton { "DICE ALL" },
-                     undoButton { "UNDO" }, droneButton { "DRONE" }, keyButton { "KEY TRACK" };
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> droneAtt, keyAtt;
+    juce::TextButton loadButton { "LOAD" }, clearButton { "CLEAR" };
+    polvere::LearnButton playButton { "PLAY" }, generateButton { "GENERATE" }, diceAllButton { "DICE ALL" },
+                         undoButton { "UNDO" }, droneButton { "DRONE" }, keyButton { "KEY TRACK" };
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> playAtt, droneAtt, keyAtt;
     juce::Label statusLabel;
-    juce::Slider chaosSlider;
-    juce::Label chaosLabel;
 
-    std::vector<std::vector<float>> undoStack;
-    juce::Random random;
     std::unique_ptr<juce::FileChooser> chooser;
     double lastTick = 0.0;
+    uint32_t lastPatternVersion = 0;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PolvereEditor)
 };

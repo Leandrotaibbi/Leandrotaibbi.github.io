@@ -1,12 +1,32 @@
 # POLVERE — granular dust engine
 
-Sintetizzatore granulare polifonico (AU / VST3 / Standalone) costruito con JUCE 8.
+Sintetizzatore granulare generativo (AU / VST3 / Standalone) costruito con JUCE 8.
+Suona da solo: un sequencer interno genera pattern sincronizzati al tempo della DAW.
 Trascini dentro tutti i sample che vuoi (anche cartelle intere) e lui li polverizza
 in una nuvola di grani dove quasi tutto è randomizzato, e lentamente "balla" da solo.
 
 ![Polvere](docs/polvere_gui.png)
 
 ## Funzioni
+
+**Sequencer generativo (suona in automatico)**
+- PLAY / GENERATE: nuovo pattern a ogni pressione (anche da controller)
+- Steps 1-32, Rate 1/64 → 1 bar (anche terzine), Fill, Range note, Ratchet, Gate, Swing
+- Evolve: a ogni giro una parte degli step si rigenera da sola
+- Step Lock: ogni step ha la sua posizione nel sample e durata dei grani
+- Sincronizzato al tempo della DAW quando è in play, altrimenti corre da solo a 120 bpm
+- Le note MIDI in ingresso trasportano il pattern (root)
+
+**Tutto mappabile**
+- Ogni parametro è automatizzabile/mappabile dalla DAW
+- MIDI Learn interno: tasto destro su qualsiasi knob, menu o pulsante → muovi il controller
+- GENERATE, DICE e UNDO sono trigger mappabili (usa i pad in modalità momentanea)
+- Le mappature vengono salvate con il progetto
+
+**Chaos & Glitch**
+- Chaos Type: Drift (random walk), Lorenz (attrattore caotico), Step S&H, Logistic map
+- Stutter: ripete fette dell'uscita sincronizzate (1/8 → 1/64 o casuale)
+- Crush: bit depth + sample rate reduction
 
 **Pool di sample**
 - Drag & drop di file e cartelle (ricorsivo): wav, aif, flac, mp3, ogg, caf, m4a — fino a 128 sample
@@ -31,8 +51,8 @@ in una nuvola di grani dove quasi tutto è randomizzato, e lentamente "balla" da
 - Filtro SVF per ogni singolo grano (LP/BP/HP) con cutoff randomizzato per grano
 - Sample Select + Sample Random (ogni grano può pescare da un sample diverso del pool)
 
-**Mutate**
-- Random walk lenti e indipendenti che fanno derivare Position, Size, Density,
+**Modulazione Chaos**
+- Modulatori indipendenti che fanno derivare Position, Size, Density,
   Pitch Random, Cutoff e Spray. L'anello rosa sui knob mostra il valore reale in quel momento
 
 **Dice**

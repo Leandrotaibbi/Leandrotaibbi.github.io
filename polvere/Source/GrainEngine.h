@@ -117,7 +117,37 @@ struct Voice
     float velocity = 1.0f;
     double samplesToNext = 0.0;
     uint32_t age = 0;
+    float posOffset = 0.0f; // p-lock del sequencer
+    float sizeMul = 1.0f;
     juce::ADSR env;
+};
+
+//==============================================================================
+// Sequencer generativo
+constexpr int maxSteps = 32;
+
+struct Step
+{
+    bool on = false;
+    float semis = 0.0f;     // offset dalla nota root (già quantizzato)
+    float velocity = 0.8f;
+    float gate = 0.6f;      // in multipli di step
+    int ratchet = 1;        // 1..4 retrigger nello step
+    float posOffset = 0.0f; // p-lock posizione
+    float sizeMul = 1.0f;   // p-lock durata grani
+};
+
+struct SeqEvent
+{
+    bool active = false;
+    bool isOn = true;
+    int countdown = 0;      // campioni all'evento
+    int note = 60;
+    float velocity = 0.8f;
+    float posOffset = 0.0f, sizeMul = 1.0f;
+    int offAfter = 0;       // per gli eventi on: durata della nota
+    int voice = -1;         // per gli eventi off
+    uint32_t age = 0;
 };
 
 //==============================================================================
