@@ -9,8 +9,14 @@ namespace Colours
     const juce::Colour bg        { 0xff110f0e };
     const juce::Colour panel     { 0xff1b1716 };
     const juce::Colour edge      { 0xff2e2624 };
-    const juce::Colour amber     { 0xffe9a55b };
-    const juce::Colour rose      { 0xffd9677f };
+    const juce::Colour amber     { 0xffe2402f };   // display: rosso segnale
+    const juce::Colour rose      { 0xfff1ece2 };   // display: bianco
+    // pannello "desk": alluminio verniciato chiaro + serigrafia nera
+    const juce::Colour paper     { 0xffe8e5de };
+    const juce::Colour paperDark { 0xffd9d5cc };
+    const juce::Colour ink       { 0xff161514 };
+    const juce::Colour inkSoft   { 0xff5d5a55 };
+    const juce::Colour signal    { 0xffd63a2a };
     const juce::Colour cream     { 0xffeadfcc };
     const juce::Colour dim       { 0xff86786f };
     const juce::Colour track     { 0xff3a302d };
@@ -23,6 +29,8 @@ public:
     LookAndFeel();
     void drawRotarySlider (juce::Graphics&, int x, int y, int w, int h, float pos,
                            float startAngle, float endAngle, juce::Slider&) override;
+    void drawLinearSlider (juce::Graphics&, int x, int y, int w, int h, float pos, float minPos, float maxPos,
+                           juce::Slider::SliderStyle, juce::Slider&) override;
     void drawButtonBackground (juce::Graphics&, juce::Button&, const juce::Colour&, bool over, bool down) override;
     void drawButtonText (juce::Graphics&, juce::TextButton&, bool over, bool down) override;
     void drawComboBox (juce::Graphics&, int w, int h, bool down, int bx, int by, int bw, int bh, juce::ComboBox&) override;

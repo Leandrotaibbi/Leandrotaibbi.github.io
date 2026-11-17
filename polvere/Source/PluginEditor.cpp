@@ -7,108 +7,121 @@ using namespace polvere;
 //==============================================================================
 LookAndFeel::LookAndFeel()
 {
-    setColour (juce::ResizableWindow::backgroundColourId, Colours::bg);
-    setColour (juce::Label::textColourId, Colours::cream);
-    setColour (juce::ComboBox::backgroundColourId, Colours::panel);
-    setColour (juce::ComboBox::textColourId, Colours::cream);
-    setColour (juce::ComboBox::outlineColourId, Colours::edge);
-    setColour (juce::ComboBox::arrowColourId, Colours::amber);
-    setColour (juce::PopupMenu::backgroundColourId, Colours::panel);
-    setColour (juce::PopupMenu::textColourId, Colours::cream);
-    setColour (juce::PopupMenu::highlightedBackgroundColourId, Colours::amber);
-    setColour (juce::PopupMenu::highlightedTextColourId, Colours::bg);
-    setColour (juce::TextButton::buttonColourId, Colours::panel);
-    setColour (juce::TextButton::buttonOnColourId, Colours::amber);
-    setColour (juce::TextButton::textColourOffId, Colours::cream);
-    setColour (juce::TextButton::textColourOnId, Colours::bg);
+    setColour (juce::ResizableWindow::backgroundColourId, Colours::paper);
+    setColour (juce::Label::textColourId, Colours::ink);
+    setColour (juce::ComboBox::backgroundColourId, Colours::paper);
+    setColour (juce::ComboBox::textColourId, Colours::ink);
+    setColour (juce::ComboBox::outlineColourId, Colours::ink);
+    setColour (juce::ComboBox::arrowColourId, Colours::ink);
+    setColour (juce::PopupMenu::backgroundColourId, Colours::paper);
+    setColour (juce::PopupMenu::textColourId, Colours::ink);
+    setColour (juce::PopupMenu::headerTextColourId, Colours::inkSoft);
+    setColour (juce::PopupMenu::highlightedBackgroundColourId, Colours::signal);
+    setColour (juce::PopupMenu::highlightedTextColourId, Colours::paper);
+    setColour (juce::TextButton::buttonColourId, Colours::paper);
+    setColour (juce::TextButton::buttonOnColourId, Colours::ink);
+    setColour (juce::TextButton::textColourOffId, Colours::ink);
+    setColour (juce::TextButton::textColourOnId, Colours::paper);
     setColour (juce::Slider::textBoxOutlineColourId, juce::Colours::transparentBlack);
 }
 
 void LookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int w, int h, float pos,
-                                    float a0, float a1, juce::Slider& s)
+                                    float a0, float a1, juce::Slider&)
 {
-    const auto bounds = juce::Rectangle<int> (x, y, w, h).toFloat().reduced (4.0f);
-    const float r = juce::jmin (bounds.getWidth(), bounds.getHeight()) * 0.5f;
-    const auto c = bounds.getCentre();
-    const float ang = a0 + pos * (a1 - a0);
-    const float arcR = r - 2.0f;
+    const auto c = juce::Rectangle<int> (x, y, w, h).toFloat().getCentre();
+    const float r = (float) juce::jmin (w, h) * 0.4f;
+    g.setColour (Colours::ink);
+    g.fillEllipse (c.x - r, c.y - r, r * 2.0f, r * 2.0f);
+    g.setColour (Colours::paper);
+    g.drawLine ({ c, c.getPointOnCircumference (r * 0.8f, a0 + pos * (a1 - a0)) }, 2.0f);
+}
 
-    // corpo
-    g.setColour (Colours::panel.brighter (0.06f));
-    g.fillEllipse (c.x - r * 0.72f, c.y - r * 0.72f, r * 1.44f, r * 1.44f);
-    g.setColour (Colours::edge.brighter (0.2f));
-    g.drawEllipse (c.x - r * 0.72f, c.y - r * 0.72f, r * 1.44f, r * 1.44f, 1.0f);
+// fader verticale da desk: fessura nera, scala serigrafata, cappuccio nero con riga bianca
+void LookAndFeel::drawLinearSlider (juce::Graphics& g, int x, int y, int w, int h, float pos, float, float,
+                                    juce::Slider::SliderStyle, juce::Slider& s)
+{
+    const float cx = (float) x + (float) w * 0.5f;
+    const float top = (float) y, bot = (float) (y + h);
 
-    // traccia
-    juce::Path tr;
-    tr.addCentredArc (c.x, c.y, arcR, arcR, 0.0f, a0, a1, true);
-    g.setColour (Colours::track);
-    g.strokePath (tr, juce::PathStrokeType (3.0f, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
+    // scala: 11 tacche, quelle a 0/50/100% più lunghe
+    g.setColour (Colours::ink.withAlpha (0.75f));
+    for (int i = 0; i <= 10; ++i)
+    {
+        const float ty = bot - (bot - top) * (float) i / 10.0f;
+        const float len = (i % 5 == 0) ? 7.0f : 4.0f;
+        g.fillRect (cx - 13.0f - len, ty - 0.5f, len, 1.0f);
+        g.fillRect (cx + 13.0f, ty - 0.5f, len, 1.0f);
+    }
 
-    // valore
-    const bool bipolar = s.getMinimum() < 0.0 && s.getMaximum() > 0.0;
-    const float from = bipolar ? (a0 + a1) * 0.5f : a0;
-    juce::Path va;
-    va.addCentredArc (c.x, c.y, arcR, arcR, 0.0f, juce::jmin (from, ang), juce::jmax (from, ang), true);
-    g.setColour (s.isEnabled() ? Colours::amber : Colours::dim);
-    g.strokePath (va, juce::PathStrokeType (3.0f, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
+    // fessura
+    g.setColour (Colours::ink);
+    g.fillRoundedRectangle (cx - 2.0f, top - 4.0f, 4.0f, bot - top + 8.0f, 2.0f);
 
-    // modulazione "mutate"
+    // modulazione caos: freccia rossa sul lato
     const float mod = (float) s.getProperties().getWithDefault ("mod", -1.0f);
     if (mod >= 0.0f)
     {
-        const float ma = a0 + juce::jlimit (0.0f, 1.0f, mod) * (a1 - a0);
-        juce::Path ma1;
-        const float mr = arcR + 4.0f;
-        ma1.addCentredArc (c.x, c.y, mr, mr, 0.0f, juce::jmin (ang, ma), juce::jmax (ang, ma), true);
-        g.setColour (Colours::rose.withAlpha (0.8f));
-        g.strokePath (ma1, juce::PathStrokeType (1.5f));
-        const auto dot = c.getPointOnCircumference (mr, ma);
-        g.fillEllipse (dot.x - 2.5f, dot.y - 2.5f, 5.0f, 5.0f);
+        const float my = bot - (bot - top) * juce::jlimit (0.0f, 1.0f, mod);
+        juce::Path tri;
+        tri.addTriangle (cx + 22.0f, my - 4.0f, cx + 22.0f, my + 4.0f, cx + 16.0f, my);
+        g.setColour (Colours::signal);
+        g.fillPath (tri);
     }
 
-    // puntatore
-    const auto p1 = c.getPointOnCircumference (r * 0.25f, ang);
-    const auto p2 = c.getPointOnCircumference (r * 0.62f, ang);
-    g.setColour (Colours::cream);
-    g.drawLine ({ p1, p2 }, 2.0f);
+    // cappuccio
+    const auto cap = juce::Rectangle<float> (cx - 11.0f, pos - 7.0f, 22.0f, 14.0f);
+    g.setColour (Colours::ink.withAlpha (0.25f));
+    g.fillRoundedRectangle (cap.translated (1.0f, 1.5f), 2.0f);
+    g.setColour (s.isMouseOverOrDragging() ? Colours::ink.brighter (0.25f) : Colours::ink);
+    g.fillRoundedRectangle (cap, 2.0f);
+    g.setColour (Colours::paper);
+    g.fillRect (cap.getX() + 3.0f, cap.getCentreY() - 0.75f, cap.getWidth() - 6.0f, 1.5f);
 }
 
 void LookAndFeel::drawButtonBackground (juce::Graphics& g, juce::Button& b, const juce::Colour&, bool over, bool down)
 {
-    auto r = b.getLocalBounds().toFloat().reduced (0.5f);
+    auto r = b.getLocalBounds().toFloat().reduced (0.75f);
     const bool on = b.getToggleState();
-    const auto accent = b.getProperties().getWithDefault ("rose", false) ? Colours::rose : Colours::amber;
-    g.setColour (on ? accent : Colours::panel.brighter (over ? 0.08f : 0.0f).darker (down ? 0.2f : 0.0f));
-    g.fillRoundedRectangle (r, 4.0f);
-    g.setColour (on ? accent : (over ? accent.withAlpha (0.7f) : Colours::edge.brighter (0.3f)));
-    g.drawRoundedRectangle (r, 4.0f, 1.0f);
+    const bool accent = b.getProperties().getWithDefault ("rose", false);
+    const auto ink = accent ? Colours::signal : Colours::ink;
+
+    g.setColour (on || down ? ink : (over ? Colours::paperDark : Colours::paper));
+    g.fillRect (r);
+    g.setColour (ink);
+    g.drawRect (r, 1.5f);
+
+    // LED
+    const float d = 6.0f;
+    const auto led = juce::Rectangle<float> (r.getX() + 8.0f, r.getCentreY() - d * 0.5f, d, d);
+    g.setColour (on ? Colours::signal.brighter (0.3f) : Colours::ink.withAlpha (0.18f));
+    g.fillEllipse (led);
+    if (on) { g.setColour (Colours::signal.withAlpha (0.35f)); g.fillEllipse (led.expanded (3.0f)); }
 }
 
-void LookAndFeel::drawButtonText (juce::Graphics& g, juce::TextButton& b, bool, bool)
+void LookAndFeel::drawButtonText (juce::Graphics& g, juce::TextButton& b, bool, bool down)
 {
+    const bool accent = b.getProperties().getWithDefault ("rose", false);
     g.setFont (getTextButtonFont (b, b.getHeight()));
-    g.setColour (b.getToggleState() ? Colours::bg : Colours::cream);
-    g.drawText (b.getButtonText(), b.getLocalBounds(), juce::Justification::centred, false);
+    g.setColour (b.getToggleState() || down ? Colours::paper : (accent ? Colours::signal : Colours::ink));
+    g.drawText (b.getButtonText().toLowerCase(), b.getLocalBounds().withTrimmedLeft (12), juce::Justification::centred, false);
 }
 
 void LookAndFeel::drawComboBox (juce::Graphics& g, int w, int h, bool, int, int, int, int, juce::ComboBox&)
 {
-    const auto r = juce::Rectangle<float> (0, 0, (float) w, (float) h).reduced (0.5f);
-    g.setColour (Colours::panel.brighter (0.05f));
-    g.fillRoundedRectangle (r, 4.0f);
-    g.setColour (Colours::edge.brighter (0.3f));
-    g.drawRoundedRectangle (r, 4.0f, 1.0f);
+    const auto r = juce::Rectangle<float> (0, 0, (float) w, (float) h).reduced (0.75f);
+    g.setColour (Colours::paper);
+    g.fillRect (r);
+    g.setColour (Colours::ink);
+    g.drawRect (r, 1.2f);
     juce::Path arrow;
     const float ax = (float) w - 12.0f, ay = (float) h * 0.5f;
     arrow.addTriangle (ax - 4.0f, ay - 2.0f, ax + 4.0f, ay - 2.0f, ax, ay + 3.0f);
-    g.setColour (Colours::amber);
     g.fillPath (arrow);
 }
 
 juce::Font LookAndFeel::getComboBoxFont (juce::ComboBox&)        { return juce::FontOptions (12.0f); }
 juce::Font LookAndFeel::getPopupMenuFont()                       { return juce::FontOptions (13.0f); }
-juce::Font LookAndFeel::getTextButtonFont (juce::TextButton&, int) { return juce::FontOptions (11.0f, juce::Font::bold); }
+juce::Font LookAndFeel::getTextButtonFont (juce::TextButton&, int) { return juce::FontOptions (12.0f, juce::Font::bold); }
 juce::Font LookAndFeel::getLabelFont (juce::Label& l)            { return l.getFont(); }
 
 //==============================================================================
@@ -122,14 +135,14 @@ void polvere::drawLearnBadge (juce::Graphics& g, juce::Component& c, juce::Recta
 
     if (learning)
     {
-        g.setColour (Colours::rose);
+        g.setColour (Colours::signal);
         g.drawRoundedRectangle (area.toFloat().reduced (1.0f), 6.0f, 2.0f);
         g.setFont (juce::FontOptions (9.0f, juce::Font::bold));
         g.drawText ("LEARN", area.removeFromTop (12), juce::Justification::centred);
     }
     else if (cc >= 0)
     {
-        g.setColour (Colours::rose.withAlpha (0.9f));
+        g.setColour (Colours::signal);
         g.setFont (juce::FontOptions (9.0f, juce::Font::bold));
         g.drawText ("CC" + juce::String (cc), area.removeFromTop (11).withTrimmedRight (1), juce::Justification::topRight);
     }
@@ -142,23 +155,24 @@ Knob::Knob (juce::AudioProcessorValueTreeState& s, const juce::String& paramId, 
     : modIndex (mi), param (s.getParameter (paramId))
 {
     slider.paramId = paramId;
-    slider.setSliderStyle (juce::Slider::RotaryHorizontalVerticalDrag);
+    slider.setSliderStyle (juce::Slider::LinearVertical);
+    slider.setVelocityBasedMode (false);
     slider.setTextBoxStyle (juce::Slider::NoTextBox, false, 0, 0);
     slider.setPopupDisplayEnabled (false, false, nullptr);
     addAndMakeVisible (slider);
     attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment> (s, paramId, slider);
     slider.setDoubleClickReturnValue (true, (double) param->convertFrom0to1 (param->getDefaultValue()));
 
-    nameLabel.setText (name.toUpperCase(), juce::dontSendNotification);
-    nameLabel.setFont (juce::FontOptions (10.0f, juce::Font::bold));
+    nameLabel.setText (name.toLowerCase(), juce::dontSendNotification);
+    nameLabel.setFont (juce::FontOptions (11.0f, juce::Font::bold));
     nameLabel.setJustificationType (juce::Justification::centred);
-    nameLabel.setColour (juce::Label::textColourId, Colours::dim.brighter (0.3f));
+    nameLabel.setColour (juce::Label::textColourId, Colours::ink);
     nameLabel.setInterceptsMouseClicks (false, false);
     addAndMakeVisible (nameLabel);
 
-    valueLabel.setFont (juce::FontOptions (11.0f));
+    valueLabel.setFont (juce::FontOptions (10.0f));
     valueLabel.setJustificationType (juce::Justification::centred);
-    valueLabel.setColour (juce::Label::textColourId, Colours::cream);
+    valueLabel.setColour (juce::Label::textColourId, Colours::inkSoft);
     valueLabel.setInterceptsMouseClicks (false, false);
     addAndMakeVisible (valueLabel);
 
@@ -183,17 +197,17 @@ void Knob::setMod (float v)
 void Knob::resized()
 {
     auto r = getLocalBounds();
-    valueLabel.setBounds (r.removeFromBottom (14));
-    nameLabel.setBounds (r.removeFromBottom (13));
-    slider.setBounds (r.reduced (2));
+    valueLabel.setBounds (r.removeFromBottom (13));
+    nameLabel.setBounds (r.removeFromBottom (14));
+    slider.setBounds (r.reduced (0, 9));
 }
 
 Choice::Choice (juce::AudioProcessorValueTreeState& s, const juce::String& paramId, const juce::String& name)
 {
     box.paramId = paramId;
-    nameLabel.setText (name.toUpperCase(), juce::dontSendNotification);
-    nameLabel.setFont (juce::FontOptions (10.0f, juce::Font::bold));
-    nameLabel.setColour (juce::Label::textColourId, Colours::dim.brighter (0.3f));
+    nameLabel.setText (name.toLowerCase(), juce::dontSendNotification);
+    nameLabel.setFont (juce::FontOptions (11.0f, juce::Font::bold));
+    nameLabel.setColour (juce::Label::textColourId, Colours::ink);
     nameLabel.setJustificationType (juce::Justification::centredLeft);
     addAndMakeVisible (nameLabel);
 
@@ -497,7 +511,7 @@ PolvereEditor::PolvereEditor (PolvereProcessor& p)
     undoButton.onClick     = [this] { proc.undoRandomise(); };
 
     statusLabel.setFont (juce::FontOptions (11.0f));
-    statusLabel.setColour (juce::Label::textColourId, Colours::dim.brighter (0.2f));
+    statusLabel.setColour (juce::Label::textColourId, Colours::inkSoft);
     statusLabel.setJustificationType (juce::Justification::centredRight);
     addAndMakeVisible (statusLabel);
 
@@ -505,7 +519,7 @@ PolvereEditor::PolvereEditor (PolvereProcessor& p)
     addAndMakeVisible (patternView);
     proc.addChangeListener (this);
 
-    setSize (1060, 850);
+    setSize (1000, 920);
     lastTick = juce::Time::getMillisecondCounterHiRes();
     updateStatus();
     startTimerHz (30);
@@ -705,38 +719,61 @@ void PolvereEditor::updateStatus()
 //==============================================================================
 void PolvereEditor::paint (juce::Graphics& g)
 {
-    g.fillAll (Colours::bg);
-
-    juce::Random r (42);
-    for (int i = 0; i < 900; ++i)
+    // pannello verniciato chiaro con grana leggera
+    g.fillAll (Colours::paper);
+    juce::Random r (7);
+    for (int i = 0; i < 2600; ++i)
     {
-        g.setColour (Colours::cream.withAlpha (r.nextFloat() * 0.035f));
+        g.setColour (Colours::ink.withAlpha (r.nextFloat() * 0.045f));
         g.fillRect ((float) r.nextInt (getWidth()), (float) r.nextInt (getHeight()), 1.0f, 1.0f);
     }
 
-    g.setColour (Colours::cream);
-    g.setFont (juce::FontOptions (26.0f, juce::Font::bold));
-    g.drawText ("P O L V E R E", 20, 12, 260, 30, juce::Justification::centredLeft);
-    g.setColour (Colours::amber);
-    g.setFont (juce::FontOptions (11.0f));
-    g.drawText ("generative granular chaos engine  -  v1.1", 22, 40, 300, 14, juce::Justification::centredLeft);
+    // viti negli angoli
+    for (auto p : { juce::Point<float> (9, 9), juce::Point<float> ((float) getWidth() - 9, 9),
+                    juce::Point<float> (9, (float) getHeight() - 9), juce::Point<float> ((float) getWidth() - 9, (float) getHeight() - 9) })
+    {
+        g.setColour (Colours::paperDark.darker (0.15f));
+        g.fillEllipse (p.x - 4.5f, p.y - 4.5f, 9.0f, 9.0f);
+        g.setColour (Colours::inkSoft);
+        g.drawLine (p.x - 3.0f, p.y + 1.0f, p.x + 3.0f, p.y - 1.0f, 1.2f);
+    }
 
+    // marchio
+    g.setColour (Colours::ink);
+    g.setFont (juce::FontOptions (30.0f, juce::Font::bold));
+    g.drawText ("polvere", 24, 12, 200, 34, juce::Justification::centredLeft);
+    g.setColour (Colours::signal);
+    g.fillEllipse (134.0f, 34.0f, 7.0f, 7.0f);
+    g.setColour (Colours::inkSoft);
+    g.setFont (juce::FontOptions (11.0f));
+    g.drawText ("generative granular chaos unit  /  model 1.2", 26, 44, 320, 14, juce::Justification::centredLeft);
+
+    int n = 1;
     for (auto& s : sections)
     {
         const auto b = s->bounds.toFloat();
-        g.setColour (Colours::panel);
-        g.fillRoundedRectangle (b, 8.0f);
-        g.setColour (Colours::edge);
-        g.drawRoundedRectangle (b.reduced (0.5f), 8.0f, 1.0f);
+        // riquadro serigrafato
+        g.setColour (Colours::ink);
+        g.drawRect (b, 1.2f);
+
+        // linguetta del titolo: nera con testo chiaro e numero
+        const juce::String title = juce::String (n++).paddedLeft ('0', 2) + "  " + s->title.toLowerCase();
+        juce::GlyphArrangement ga;
+        const juce::Font f (juce::FontOptions (11.0f, juce::Font::bold));
+        ga.addLineOfText (f, title, 0, 0);
+        const float tw = ga.getBoundingBox (0, -1, true).getWidth() + 16.0f;
+        const auto tab = juce::Rectangle<float> (b.getX(), b.getY(), tw, 18.0f);
         const bool hot = s->title == "CHAOS" || s->title == "GLITCH" || s->title == "PERFORM";
-        g.setColour (hot ? Colours::rose : Colours::amber);
-        g.setFont (juce::FontOptions (11.0f, juce::Font::bold));
-        g.drawText (s->title, s->bounds.getX() + 12, s->bounds.getY() + 6, 120, 16, juce::Justification::centredLeft);
+        g.setColour (hot ? Colours::signal : Colours::ink);
+        g.fillRect (tab);
+        g.setColour (Colours::paper);
+        g.setFont (f);
+        g.drawText (title, tab.withTrimmedLeft (8.0f), juce::Justification::centredLeft);
 
         if (s->title == "GLITCH" && proc.stutterActive.load())
         {
-            g.setColour (Colours::rose);
-            g.fillEllipse ((float) s->bounds.getX() + 70.0f, (float) s->bounds.getY() + 10.0f, 7.0f, 7.0f);
+            g.setColour (Colours::signal);
+            g.fillEllipse (b.getX() + tw + 8.0f, b.getY() + 5.0f, 8.0f, 8.0f);
         }
     }
 }
@@ -762,68 +799,72 @@ void PolvereEditor::layoutSection (Section& s, juce::Rectangle<int> area, int kn
 
     const int w = ks.empty() ? knobW : juce::jmax (50, juce::jmin (knobW + 8, inner.getWidth() / (int) ks.size()));
     for (auto* k : ks)
-        k->setBounds (inner.removeFromLeft (w).withSizeKeepingCentre (juce::jmin (w, knobW + 4), juce::jmin (inner.getHeight(), 94)));
+        k->setBounds (inner.removeFromLeft (w).withSizeKeepingCentre (juce::jmin (w, knobW + 4), juce::jmin (inner.getHeight(), 124)));
 }
 
 void PolvereEditor::resized()
 {
-    auto r = getLocalBounds().reduced (14);
+    auto r = getLocalBounds().reduced (18, 14);
     const int gap = 10;
+    const int sw = 58; // larghezza di un fader
 
     auto header = r.removeFromTop (48);
-    auto hb = header.removeFromRight (150).withSizeKeepingCentre (150, 28);
-    clearButton.setBounds (hb.removeFromRight (70));
-    hb.removeFromRight (10);
+    auto hb = header.removeFromRight (176).withSizeKeepingCentre (176, 28);
+    clearButton.setBounds (hb.removeFromRight (82));
+    hb.removeFromRight (12);
     loadButton.setBounds (hb);
 
-    r.removeFromTop (4);
     statusLabel.setBounds (r.removeFromTop (16));
     r.removeFromTop (4);
-    cloud.setBounds (r.removeFromTop (150));
+    cloud.setBounds (r.removeFromTop (128));
     r.removeFromTop (gap);
 
-    // SEQUENCER: pulsanti + pattern + knob
+    // SEQUENCER: pulsanti + pattern + fader
     {
         auto& seq = section ("SEQUENCER");
-        auto area = r.removeFromTop (182);
+        auto area = r.removeFromTop (206);
         seq.bounds = area;
-        seq.dice->setBounds (area.getRight() - 50, area.getY() + 5, 44, 18);
-        auto inner = area.reduced (10, 0).withTrimmedTop (26).withTrimmedBottom (8);
+        seq.dice->setBounds (area.getRight() - 56, area.getY() + 5, 50, 18);
+        auto inner = area.reduced (10, 0).withTrimmedTop (26).withTrimmedBottom (6);
 
-        auto buttons = inner.removeFromLeft (110);
-        playButton.setBounds (buttons.removeFromTop (40).reduced (0, 2));
-        buttons.removeFromTop (6);
-        generateButton.setBounds (buttons.removeFromTop (56).reduced (0, 2));
+        auto buttons = inner.removeFromLeft (112).reduced (0, 4);
+        playButton.setBounds (buttons.removeFromTop (44));
+        buttons.removeFromTop (8);
+        generateButton.setBounds (buttons.removeFromTop (60));
         inner.removeFromLeft (12);
 
-        patternView.setBounds (inner.removeFromTop (52));
-        inner.removeFromTop (4);
+        patternView.setBounds (inner.removeFromTop (46));
+        inner.removeFromTop (2);
 
-        auto tmp = std::make_unique<Section>();
-        tmp->cells = seq.cells;
-        layoutSection (*tmp, inner.withTrimmedTop (-24).withTrimmedBottom (-6).expanded (8, 0));
+        Section tmp;
+        tmp.cells = seq.cells;
+        layoutSection (tmp, inner.withTrimmedTop (-24).withTrimmedBottom (-6).expanded (8, 0), sw);
     }
     r.removeFromTop (gap);
 
-    const int rowH = 122;
+    const int rowH = 150;
     auto row1 = r.removeFromTop (rowH);
-    layoutSection (section ("GRAIN"), row1.removeFromLeft (8 * 72 + 16));
+    layoutSection (section ("GRAIN"), row1.removeFromLeft (8 * (sw + 4) + 16), sw);
     row1.removeFromLeft (gap);
-    layoutSection (section ("PITCH"), row1);
+    layoutSection (section ("PITCH"), row1, sw);
+    {
+        auto pb = section ("PITCH").bounds;
+        keyButton.setBounds (pb.getRight() - 106, pb.getBottom() - 46, 96, 34);
+    }
     r.removeFromTop (gap);
 
     auto row2 = r.removeFromTop (rowH);
-    layoutSection (section ("COLOUR"), row2.removeFromLeft (6 * 68 + 16 + 96), 66);
+    layoutSection (section ("COLOUR"), row2.removeFromLeft (6 * (sw + 4) + 16 + 96), sw);
     row2.removeFromLeft (gap);
-    layoutSection (section ("CHAOS"), row2.removeFromLeft (2 * 68 + 16 + 96), 66);
+    layoutSection (section ("CHAOS"), row2.removeFromLeft (2 * (sw + 4) + 16 + 96), sw);
     row2.removeFromLeft (gap);
-    layoutSection (section ("GLITCH"), row2, 66);
+    layoutSection (section ("GLITCH"), row2, sw);
     r.removeFromTop (gap);
 
     auto row3 = r.removeFromTop (rowH);
-    layoutSection (section ("AMP"), row3.removeFromLeft (4 * 66 + 16), 62);
+    layoutSection (section ("AMP"), row3.removeFromLeft (4 * (sw + 4) + 16), sw);
     row3.removeFromLeft (gap);
-    layoutSection (section ("SPACE"), row3.removeFromLeft (7 * 68 + 16), 64);
+    layoutSection (section ("SPACE"), row3.removeFromLeft (7 * (sw + 4) + 16), sw);
     row3.removeFromLeft (gap);
 
     // PERFORM: dado globale, undo, drone, key track
@@ -831,13 +872,12 @@ void PolvereEditor::resized()
         auto& perf = section ("PERFORM");
         perf.bounds = row3;
         auto inner = row3.reduced (10, 0).withTrimmedTop (26).withTrimmedBottom (8);
-        auto knobArea = inner.removeFromRight (70);
-        perf.cells.front()->setBounds (knobArea.withSizeKeepingCentre (70, juce::jmin (88, knobArea.getHeight())));
+        auto knobArea = inner.removeFromRight (sw);
+        perf.cells.front()->setBounds (knobArea.withSizeKeepingCentre (sw, juce::jmin (124, knobArea.getHeight())));
         inner.removeFromRight (6);
         auto top = inner.removeFromTop (inner.getHeight() / 2);
-        diceAllButton.setBounds (top.removeFromLeft (top.getWidth() / 2).reduced (2, 3));
-        undoButton.setBounds (top.reduced (2, 3));
-        droneButton.setBounds (inner.removeFromLeft (inner.getWidth() / 2).reduced (2, 3));
-        keyButton.setBounds (inner.reduced (2, 3));
+        diceAllButton.setBounds (top.reduced (2, 4));
+        undoButton.setBounds (inner.removeFromLeft (inner.getWidth() / 2).reduced (2, 4));
+        droneButton.setBounds (inner.reduced (2, 4));
     }
 }
