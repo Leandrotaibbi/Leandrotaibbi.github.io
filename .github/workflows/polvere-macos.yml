@@ -1,0 +1,48 @@
+name: Polvere - build macOS (AU + VST3)
+
+on:
+  push:
+    paths:
+      - "polvere/**"
+      - ".github/workflows/polvere-macos.yml"
+  workflow_dispatch:
+
+jobs:
+  build-macos:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure (universal arm64 + x86_64)
+        run: cmake -S polvere -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
+
+      - name: Build
+        run: cmake --build build --config Release -j 4
+
+      - name: Ad-hoc codesign
+        run: |
+          cd build/Polvere_artefacts/Release
+          codesign --force --deep -s - AU/Polvere.component
+          codesign --force --deep -s - VST3/Polvere.vst3
+          codesign --force --deep -s - Standalone/Polvere.app
+
+      - name: Validate Audio Unit (auval)
+        run: |
+          mkdir -p ~/Library/Audio/Plug-Ins/Components
+          cp -R build/Polvere_artefacts/Release/AU/Polvere.component ~/Library/Audio/Plug-Ins/Components/
+          killall -9 AudioComponentRegistrar || true
+          sleep 2
+          auval -v aumu Plvr Ltbb
+
+      - name: Package
+        run: |
+          mkdir -p dist
+          cd build/Polvere_artefacts/Release
+          ditto -c -k --keepParent AU/Polvere.component ../../../dist/Polvere-AU.zip
+          ditto -c -k --keepParent VST3/Polvere.vst3 ../../../dist/Polvere-VST3.zip
+          ditto -c -k --keepParent Standalone/Polvere.app ../../../dist/Polvere-Standalone.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Polvere-macOS
+          path: dist/*.zip
